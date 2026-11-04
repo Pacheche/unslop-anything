@@ -40,13 +40,15 @@ make these app icons look less generated
 - **Audits with evidence.** Every sign comes with where it lives and its fix: a file and line, a screen region or a quoted sentence.
 - **Rates the slop.** Ten categories per medium, 10% each. Heavy slop gets the full process, light slop gets polish only, clean work is left alone.
 - **Sets a direction first.** Product, character, world, moments and one signature detail, derived from your product, never from trends. For new looks it compares three directions before committing, and waits for your OK.
-- **Fixes in passes.** UI: spacing, color, icons, copy, type, layout, details, visuals, motion. Writing: voice-preserving minimum edits.
+- **Fixes what weighs most first.** On landing pages: the headline, something real at the top, then the metadata and builder leftovers that automated scores punish most.
+- **Fixes in passes.** UI: spacing, color, icons, copy, type, layout, details, visuals, motion, metadata. Writing: voice-preserving minimum edits.
+- **Owns its values.** A type and spacing scale derived from your text, fonts chosen with a reason, decisions saved in `DESIGN.md` so the next prompt does not drift back. It never ships a skill's example values, its own included.
 - **Verifies.** Renders again, re-scans, runs the checklist and the template test: if a competitor's name fits your screen or your post, it is not done.
 - **Never invents.** No new features, numbers, testimonials or sources. Unverifiable claims go back to you.
 
 ## Scanner
 
-`scripts/slop_scan.py` finds candidate signs in code (HTML, CSS, JSX, TSX, Vue, Svelte) and in text (Markdown, plain text) with English, Spanish and Portuguese patterns. Python 3, no dependencies.
+`scripts/slop_scan.py` finds candidate signs in code (HTML, CSS, JSX, TSX, Vue, Svelte) and in text. About 60 rules: color and glow tells, stock fonts and type scale problems, icon tiles, template copy, made-up proof, builder fingerprints (Lovable, v0, Bolt), default metadata, recipes copied from other anti-slop skills, skipped headings, primitive-shape SVG scenes, bounce easing and more. Writing rules cover Markdown and plain text in English, Spanish and Portuguese. Python 3, no dependencies.
 
 ```bash
 python3 scripts/slop_scan.py src/

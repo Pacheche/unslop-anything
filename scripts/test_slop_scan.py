@@ -24,6 +24,9 @@ class UiRules(unittest.TestCase):
             "heavy-weight", "tracked-caps", "emoji", "arrow-glyph", "off-grid-tw", "off-grid-css",
             "greeting", "exclamation", "wordy-placeholder", "hype-ui", "unverified-claim",
             "intro-badge", "em-dash-ui", "pill-everything", "loop-anim", "transition-all", "hover-lift",
+            "stock-font", "template-copy", "fake-urgency", "placeholder-people", "fake-logos",
+            "builder-fingerprint", "default-title", "recipe-fingerprint", "placeholder-asset",
+            "missing-description", "missing-social-image",
         }
         self.assertEqual(expected - found, set())
 
@@ -68,6 +71,48 @@ class UiRules(unittest.TestCase):
         self.assertIn("colored-glow", self.ui('<div className="shadow-purple-500/50 shadow-md">'))
         self.assertEqual(slop_scan.chromatic_stops("hsl(270 80% 60%), oklch(0.6 0.2 250)"), 2)
         self.assertEqual(slop_scan.chromatic_stops("hsl(0 0% 20%), oklch(0.3 0 0)"), 0)
+
+    def test_surface_and_component_rules(self):
+        self.assertIn("side-border", self.ui('<div className="border-l-4 border-blue-500 rounded-lg">'))
+        self.assertNotIn("side-border", self.ui('<div className="border-l border-neutral-200">'))
+        self.assertIn("cream-background", self.ui("body { background: #F5F0E8; }"))
+        self.assertNotIn("cream-background", self.ui("body { background: #FAFAFA; }"))
+        self.assertIn("radial-glow", self.ui(".hero { background: radial-gradient(circle, rgba(139,92,246,.4), transparent 60%); }"))
+        tile = '<div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center">'
+        self.assertIn("icon-tile", self.ui("\n".join([tile] * 3)))
+        self.assertNotIn("icon-tile", self.ui(tile))
+
+    def test_motion_and_type_rules(self):
+        self.assertIn("bounce-easing", self.ui("transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);"))
+        self.assertNotIn("bounce-easing", self.ui("transition: opacity 200ms cubic-bezier(0.2, 0.8, 0.2, 1);"))
+        self.assertIn("extreme-tracking", self.ui("h1 { letter-spacing: -0.06em; }"))
+        self.assertNotIn("extreme-tracking", self.ui("h1 { letter-spacing: -0.04em; }"))
+        self.assertIn("tiny-text", self.ui(".meta { font-size: 10px; }"))
+        self.assertNotIn("tiny-text", self.ui(".meta { font-size: 12px; }"))
+
+    def test_markup_checks(self):
+        found = {h.rule for h in slop_scan.markup_checks("<h1>A</h1>\n<h3>B</h3>", "x.html")}
+        self.assertIn("skipped-heading", found)
+        self.assertEqual(slop_scan.markup_checks("<h1>A</h1><h2>B</h2><h3>C</h3><h2>D</h2>", "x.html"), [])
+        scene = "<svg>" + "<circle r='1'/>" * 30 + "</svg>"
+        self.assertIn("svg-scene", {h.rule for h in slop_scan.markup_checks(scene, "x.html")})
+
+    def test_copy_rules(self):
+        self.assertIn("aphorism", self.ui("<p>Ship faster. No meetings.</p>\n<p>Not a tool. A teammate.</p>"))
+        self.assertIn("placeholder-asset", self.ui('<img alt="team">'))
+
+    def test_one_or_two_tracked_labels_are_fine(self):
+        self.assertNotIn("tracked-caps", self.ui('<span class="uppercase tracking-wide">A</span>\n<span class="uppercase tracking-wide">B</span>'))
+
+    def test_html_with_metadata_has_no_metadata_hits(self):
+        doc = '<html><head><meta name="description" content="x"><meta property="og:image" content="/a.png"></head></html>'
+        self.assertEqual(slop_scan.file_checks(doc, "x.html"), [])
+        self.assertEqual({h.rule for h in slop_scan.file_checks("<head></head>", "x.html")},
+                         {"missing-description", "missing-social-image"})
+
+    def test_title_with_real_name_is_fine(self):
+        self.assertNotIn("default-title", self.ui("<title>Contramar · Menu</title>"))
+        self.assertIn("default-title", self.ui("<title>Vite + React + TS</title>"))
 
     def test_plain_uppercase_without_tracking_is_fine(self):
         self.assertNotIn("tracked-caps", self.ui(".kbd { text-transform: uppercase; }"))

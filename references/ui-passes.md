@@ -4,17 +4,30 @@ Fix in this order. Finish a pass across the whole screen before the next one. Wh
 
 Why this order: spacing first, because everything reads differently once the rhythm is right. Color and icons next, because they are the loudest slop. Copy before type and layout, because the length of a headline decides its size and where it sits. Visuals and motion last, because they must fit a screen that already works without them.
 
-The values below are starting points. If the project has a design system (theme tokens, CSS variables, Tailwind theme, shadcn, Material), work through it: change token values or how tokens are used, never bypass them with hard-coded values. A real brand accent stays the accent.
+The values below are starting points for deriving your own, not answers. A fixed recipe applied to every project becomes the next fingerprint (the double-bezel card and Satoshi spread exactly that way). Derive each value from this product's text, world and brand, and write down why.
+
+If the project has a design system (theme tokens, CSS variables, Tailwind theme, shadcn, Material), work through it: change token values or how tokens are used, never bypass them with hard-coded values. A real brand accent stays the accent.
+
+## Landing pages and marketing sites: impact first
+
+Recoloring a page that says nothing still leaves a page that says nothing. On a landing page, decide these before the passes, in this order, because they move the result the most:
+
+1. **Headline.** What the visitor gets and who it is for, under about ten words, with the product's own nouns. Write five genuinely different options from facts the user gave you; pick one and say why. If the facts are missing, ask.
+2. **Something real at the top.** A screenshot of the product, a photo of the place, the person or the object. If there is nothing yet, good text alone beats an image nobody chose.
+3. **Metadata and leftovers.** Pass 10 below. It is the cheapest fix and the one that weighs most in automated scores.
+
+Then run passes 1-9. Within them, the three-card section, made-up proof and decorative motion are the next biggest wins.
 
 ## 1. Spacing
 
-- 4px grid for margins, paddings, gaps and fixed heights. Common steps: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128. Any multiple of 4 is fine.
+- One owned scale: 6-8 spacing values, decided once, stored as tokens, and nothing else. Using the project's existing scale is fine. The sign of an untouched page is not the 4px grid; it is reaching for any value from the framework's whole default list, and putting the same gap between everything.
+- With no scale, derive one from the text: body size times line height gives one line (17px x 1.5 ≈ 26px); its fractions and multiples give the steps (for example 6, 13, 26, 39, 52, 104, 156). Or pick 4px-grid steps on purpose (4, 8, 16, 24, 40, 64, 96). Either way, few values with clear jumps.
 - Same kind, same size: one row height and one gap per list, one padding per row of cards.
 - Grouping by distance: space inside a group is clearly smaller than space between groups. Rough levels: inside a control 4-12, between related items 4-8, between groups 16-24, between sections 32-64 (landing sections 80-128).
 - Padding by density: sidebars and compact panels ~16, cards 20-24, page gutters 24-32 desktop, 16-20 mobile.
 - Navigation is the densest part of an app: rows 32-36 tall, 2-4 apart; a section label sits closer to its items than to the group above (about 24 above, 8 below).
 - One max width and one gutter for every section of a page.
-- Replace every one-off value with a step. Re-measure the sidebar and the hero after the pass; that is where spacing breaks first.
+- Replace every one-off value with a step. If the project uses Tailwind, move the scale into the theme and drop the defaults you do not use, so later edits cannot drift back. Re-measure the sidebar and the hero after the pass; that is where spacing breaks first.
 
 ## 2. Color
 
@@ -59,26 +72,30 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 
 ## 5. Type
 
-- Pick a family for the character, not the trend. Starting points (all free):
+- Pick a family for the character, not the trend, and write one line on why it fits this product. Check it is not what every product in the category already uses (see the overused list in `ui-signs.md`, category 2). Families to consider, never to default to:
 
 | Character | Interface family | Optional partner |
 |---|---|---|
 | Precise, technical, calm | Geist, IBM Plex Sans, Inter | Geist Mono or JetBrains Mono for figures and meta |
-| Warm, human, friendly | DM Sans, Figtree, Instrument Sans | Newsreader or Instrument Serif for the hero headline only |
-| Editorial, crafted | Inter or Söhne-like grotesk | Fraunces, Newsreader, EB Garamond for headlines |
-| Playful, bold | Bricolage Grotesque, Space Grotesk | a mono for small labels |
+| Warm, human, friendly | Figtree, Nunito Sans, Atkinson Hyperlegible | a humanist serif only if the world is print |
+| Editorial, crafted | a grotesk with character (Schibsted Grotesk, Hanken Grotesk) | Newsreader, EB Garamond, Literata for long reading, not as a thin italic accent |
+| Playful, bold | Bricolage Grotesque, Familjen Grotesk, a condensed display | a mono for small labels |
+| Rooted in a place or craft | a family with that origin (a Latin American, Japanese, Swiss or signage face) | none |
 | Native mobile | SF Pro (iOS), Roboto or the brand font (Android) | none |
 
 - One interface family plus at most one partner. A display serif belongs only to large headlines.
-- Scale (web): meta 12/16, secondary 13-14/20, body 14-16/20-24, card figures 28-32, page title 28-36, hero 48-72 desktop and 34-44 mobile with line height 1.02-1.1.
+- Six sizes, not twenty: one for labels, one for body, four for headings, with obvious jumps. Starting point: body size times 1.5 per level (17 → 25, 38, 57, 86, plus 14 for labels). Apps and dashboards stay denser: meta 12, secondary 13-14, body 14-16, card figures 28-32, page title 28-36.
+- Landing hero: the only large text on the page, far above everything else. On strong sites the largest text sits near 8vw at 1440px (about 120px); on weak ones near 5vw. Start from `font-size: clamp(2.75rem, 8.4vw, 8.5rem); line-height: 0.95; letter-spacing: -0.03em; text-wrap: balance`, then tune to the sentence: if it runs past three lines on a 390px phone, shorten the sentence before shrinking the type. Section headings at most half its size.
 - Weights 400 and 500; 600 for headings and emphasis when needed. Hierarchy from size and color. Keep platform and design-system weights.
-- Sentence case. Letter spacing 0 under 16px; display from 40px may go to -0.02em.
+- Sentence case. Letter spacing 0 under 16px; display from 40px may go to -0.02em to -0.04em.
+- Eyebrow labels: delete the ones that repeat their heading; keep at most one per page that adds a fact, as `font-size: 0.875rem; text-transform: none; letter-spacing: 0` in the muted color.
 - `tabular-nums` and one number format across the screen.
 - `text-wrap: balance` on headings, `pretty` on paragraphs.
 
 ## 6. Layout
 
-- Keep sections and their order. Inside a section, alignment and proportions may change.
+- Keep sections and their order. Inside a section, alignment and proportions may change. Sections that only exist because the template had them go in the report as suggestions; remove them only with the user's yes.
+- Break the repetition: if every section is a centered heading over a grid, change the shape of some (a left-aligned split, a full-width figure, a plain list, a different background or width). The three-icon-card section becomes a list with one sentence each, one concrete example, or a before and after.
 - Apps keep app proportions: sidebar 240-280, fluid content capped around 1440-1600, header 56-64.
 - Landing hero, strongest to weakest: a full-bleed scene from the product's world with the headline on its calm area and the product view rising from the bottom; an asymmetric split with the visual at least half the width; text over a large product view. Centered stacks only for short heroes without a visual.
 - Long headlines align left. One primary and one secondary action.
@@ -98,6 +115,9 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 - Active state: a small surface step and a hairline, not a gradient with a glow.
 - Hover and focus inside the palette; a visible focus ring.
 - The signature detail from the direction appears where it belongs and nowhere else.
+- Every state exists and is designed: hover, focus, active, disabled, loading, error, empty. Empty states say how to fill them; errors say what happened and how to recover.
+- Browser surfaces carry the design too, and models skip them most often: text selection (`::selection`), the caret (`caret-color`), scrollbars, focus rings, link underline offset (`text-underline-offset`), and tabular numerals in data. Theme them from the palette.
+- Light or dark comes from where and when the product is used (a night-shift monitor, a kitchen tablet at noon), not from the category.
 
 ## 8. Visuals
 
@@ -115,9 +135,26 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 - Only transform and opacity. Respect `prefers-reduced-motion` with a crossfade.
 - Ask how often people will see it: hundreds of times a day gets near-instant; occasional moments may be richer.
 
+## 10. Metadata and leftovers
+
+- Every page has its own `<title>` (the business name and what the page is, not the hyphenated project name) and a meta description of up to 160 characters, from facts on the page.
+- A social image (`og:image`, 1200x630) and the brand's favicon replace the builder's defaults. If no asset exists, list them under `Not checked:` instead of inventing one.
+- Remove builder badges, section comments (`<!-- Hero Section -->`), Tailwind from a CDN in production, `/lovable-uploads/` paths and builder-named tokens (`--primary-glow`, `--shadow-elegant`): rename tokens to the system's own names and values.
+- Links to `#`, leftover sample copy, images named `hero-image.png` or loading from `picsum.photos` → real targets and assets, or list them in the report.
+- Also check: `lang` on `<html>`, one `<h1>`, headings in order, `alt` text on content images.
+
+## Lock the decisions
+
+A model that does not remember what was decided drifts back to its defaults on the next request. In heavy mode, offer to save the decisions where every agent reads them:
+
+- If the project has a `DESIGN.md`, design tokens or rules in `AGENTS.md`/`CLAUDE.md`, follow them and update them with what changed.
+- Otherwise, with the user's yes, write a short `DESIGN.md`: typefaces with the reason for each, colors as hex or OKLCH with their roles, the type and spacing scales, radius and shadow rules, motion rules, and the bans as checkable rules ("never three icon cards", "no uppercase labels above headings"), not wishes ("feel elegant"). Link it from `AGENTS.md` or `CLAUDE.md`.
+
 ## Checklist
 
-- [ ] Every spacing value on the 4px grid; equal things have equal sizes
+- [ ] Landing page: headline says what it is and for whom; something real at the top
+- [ ] Every spacing value from one small owned scale; equal things have equal sizes; tight inside groups, open between them
+- [ ] Six type sizes or so, with a lead step far above the rest
 - [ ] Icons, labels and numbers in aligned columns
 - [ ] One tinted neutral ramp, three text roles, one accent with enough contrast
 - [ ] No hue gradients, gradient text, glows, colored shadows, blobs
@@ -129,5 +166,14 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 - [ ] Hero has a real visual or a product preview with a moment, never filler
 - [ ] First screen composed as a whole
 - [ ] No looping or bouncy motion; one curve; no animated layout properties
-- [ ] Renders checked at desktop and mobile widths: nothing clipped, overlapping or overflowing
+- [ ] Renders checked at desktop and mobile widths, region by region:
+  - contrast: body and placeholders 4.5:1, large text 3:1; secondary text on a colored surface tinted from that hue, never grey
+  - nothing clipped, overlapping, overflowing its box or the viewport; tooltips and menus not cut by an `overflow: hidden` parent; cards in scrollers inset on both sides
+  - text: body measure 65-75ch, line height at least 1.3 (1.5-1.7 for body), not flush to the viewport edge (16px minimum), at least 8px (ideally 12-16px) inside any bordered or filled box, no one-word last lines on headings
+  - headings in order (no h1 to h3 jump), more space above a heading than below it
+  - no content stuck invisible after a reveal animation, no script errors in the console, no broken images
+- [ ] Every state designed: hover, focus, disabled, loading, error, empty
+- [ ] Selection, caret, scrollbars, focus rings and underline offset themed from the palette
+- [ ] Own title, description, social image and favicon; no builder leftovers, `#` links or sample assets
+- [ ] No recipe value from this or any other skill shipped unchanged; every chosen value has a reason
 - [ ] Template test passed

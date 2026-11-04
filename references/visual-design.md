@@ -17,6 +17,10 @@ Ten categories; the slop level is the count with at least one sign, times 10%.
 9. **Slides and social graphics.** Title + three bullets + stock photo on every slide, a headline that could fit any company, a decorative shape in every corner, "✨ 5 tips to..." covers, logo soup.
 10. **Style as a filter.** A print style (engraving, risograph, woodcut) or a trend (glass, clay 3D, grain) slapped on one image while the rest of the brand is plain, so it reads as a filter instead of a language.
 
+## Product stills (a faux UI shot for a landing, slide, post or demo)
+
+Write the plan before drawing: where it will sit, the focus object, the one action it shows, the payoff the viewer should get, and what is left out. Then check it for the five usual failures: too much detail, a wireframe look, a screenshot dropped into a box, everything at the same weight, and generic grey instead of the product's style. Fix the look first (palette, type, surfaces), then the story, then the details.
+
 ## Fix in passes
 
 1. **Idea.** Write the subject as one concrete sentence from the product's world ("a single container ship seen from straight above on a calm grey sea" for a logistics API). Cut every subject that is not in the sentence.

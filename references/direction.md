@@ -29,6 +29,14 @@ The concept must make the product feel like its own world. "Attractive" and "dif
 
 When there is no existing brand to follow, write three distinct directions (five lines each, different worlds or concepts), compare them against the product sentence, then continue with one. Show them to the user when you stop for confirmation. Committing to the first idea is the most common source of sameness.
 
+## Decisions, not adjectives
+
+"Make it modern", "cleaner", "more professional" turn into the most average thing the model knows. Before building, the direction must contain decisions someone can check: the typeface and why, the background, text and accent colors as values, the references and what to take from each, and a short list of don'ts. If the user cannot say what they want, ask for two or three sites they like and one they dislike; that answers more than any adjective. Without it you loop: ten iterations that end where the first one started.
+
+## Variants of one part, not whole pages
+
+Do not regenerate the whole page to explore. Pick the part that matters (the hero, one section, a background) and make two or three genuinely different variants of only that, on the same tokens. Choose one, or ask for a new round based on the closest. Then correct with small, concrete requests ("bigger, lower, filling the box right of the headline without touching the text"), one change at a time. Fonts, palette and measures stay fixed across variants; only layout, copy and motion vary.
+
 ## Study references for structure, not looks
 
 When the product sits in a known category (chat, banking, fitness, booking), look at 3-5 strong apps or sites in that category, from screenshots the user gives you or from your own browsing:
@@ -37,6 +45,8 @@ When the product sits in a known category (chat, banking, fitness, booking), loo
 - Extract numbers and structure, not vibe: row heights, type sizes, where the primary action sits, what is icon vs text, how the active state looks.
 - What every reference does is a convention: keep it unless you have a reason. What only the best do is the bar. What all of them do badly is your opening.
 - Stop when new references stop changing your notes.
+- Name what to take from each one: one site's heading scale, another's spacing between sections, a third's loader. For motion and details that are hard to put in words, a library of real interface styles (for example styles.refero.design) gives the model something concrete. Never ask for a clone: it comes back as a worse copy with nothing of this product in it.
+- Build desktop first if the reference is desktop, then decide for each strong idea whether it transfers to mobile or needs a different answer there. Do not just shrink it.
 
 Never paste one product's look onto another. Turning every chat app into iMessage is a new template, and people notice.
 

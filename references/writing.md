@@ -97,6 +97,8 @@ Lines that step outside the subject to tell the reader how to read: "That last p
 ### 10. Genericness
 
 - Sentences that fail the portability test.
+- Stock marketing lines: "Everything you need, in one place", "The future of X is here", "Take your business to the next level", "Why choose us?", "No fluff. Just results.", "Less noise. More signal.", "Fast. Simple. Secure.", calling everything "theater" → one fact about this product.
+- Adjectives where the draft or the product has a fact: "quality ingredients" → the supplier's name; "flexible booking" → "bookings for up to six online, larger groups by email".
 - Abstract nouns where a number, name or example was available in the draft.
 - Hedging stacks ("may potentially help to somewhat improve") → one hedge, or none if the writer is sure.
 - Everything equally polished, no opinion, no admission, no texture → keep or restore the writer's edges; never sand them off.
