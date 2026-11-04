@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<style>
+  .card { padding: 24px; margin: 8px 12px; gap: 16px; border: 1px solid rgb(23 23 23 / 0.08); transition: background-color 160ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .row-active { background: linear-gradient(#2b2b2b, #1f1f1f); }
+  h1 { font-weight: 500; letter-spacing: -0.02em; }
+  .live-dot { width: 8px; height: 8px; }
+</style>
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+  <aside class="p-4 w-[256px]">
+    <span class="text-sm text-neutral-500">Navigation</span>
+    <a class="rounded-md">Overview</a>
+    <a class="rounded-md">Inbox <span class="tabular-nums">12</span></a>
+    <input class="rounded-md" placeholder="Search">
+  </aside>
+  <main class="mt-[24px]">
+    <h1>October 2026</h1>
+    <p>Invoices paid this month, by client and due date.</p>
+    <div class="card hover:bg-neutral-100 transition-colors">
+      <span>+12% vs last month</span>
+      <a>View all</a>
+    </div>
+    <button class="rounded-md">Create invoice</button>
+    <script>const ok = !!window.fetch;</script>
+  </main>
+</body>
+</html>

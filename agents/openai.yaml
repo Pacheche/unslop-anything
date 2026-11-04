@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unslop Anything"
+  short_description: "Remove AI slop from UI, design and writing"
+  default_prompt: "Use $unslop-anything to unslop this."
