@@ -64,7 +64,7 @@ It reports candidates, not verdicts. Zero hits does not mean zero slop: hierarch
 ```text
 SKILL.md                         entry point and routing
 references/ui-signs.md           UI signs in ten categories, with fixes and false positives
-references/ui-passes.md          the nine passes with starting values and a checklist
+references/ui-passes.md          the passes, spacing to metadata, with starting values and a checklist
 references/direction.md          how to decide what the product should look like
 references/mobile.md             iOS and Android specifics
 references/component-vocabulary.md  precise names for overlays and controls
