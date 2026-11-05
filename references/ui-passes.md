@@ -54,7 +54,7 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 - Semantic colors carry meaning only, toned to sit inside the palette.
 - Remove hue-to-hue gradients, gradient text, glows, colored shadows, washes, neon borders. A gradient may stay as a small tone shift within one hue.
 - Depth: on dark themes, lighter surfaces and hairlines, not shadows. On light themes, small neutral shadows (`0 1px 2px rgb(0 0 0 / .05)`, floating `0 8px 24px rgb(0 0 0 / .06)`).
-- On dark themes the primary button can be an off-white from the ramp with dark text; on light themes, the primary text color as fill with white text. Both read more deliberate than a colored button. Use this only when the product has no real brand accent.
+- On dark themes the primary button can be an off-white from the ramp with dark text; on light themes, the primary text color as fill with white text. Use this only when the product has no real brand accent and the direction is quiet on purpose. A product whose page needs energy gets a decided accent from its world instead; a graphite button on a cream page is the newer default, not a decision.
 
 ## 3. Icons
 

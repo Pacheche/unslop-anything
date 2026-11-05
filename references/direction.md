@@ -29,6 +29,8 @@ The concept must make the product feel like its own world. "Attractive" and "dif
 
 When there is no existing brand to follow, write three distinct directions (five lines each, different worlds or concepts), compare them against the product sentence, then continue with one. Show them to the user when you stop for confirmation. Committing to the first idea is the most common source of sameness.
 
+For a UI, render the three as hero variants on the real content and show the pictures, not five lines of text: people pick from images in seconds and cannot judge a palette from its hex values. None of the three may be the "tasteful" fallback (cream page, graphite text and button, one muted accent, lots of empty space): that is what a model reaches for once the loud defaults are banned, and it reads as a template too. At least one of the three keeps the original's energy and shows the product working.
+
 ## Decisions, not adjectives
 
 "Make it modern", "cleaner", "more professional" turn into the most average thing the model knows. Before building, the direction must contain decisions someone can check: the typeface and why, the background, text and accent colors as values, the references and what to take from each, and a short list of don'ts. If the user cannot say what they want, ask for two or three sites they like and one they dislike; that answers more than any adjective. Without it you loop: ten iterations that end where the first one started.
@@ -56,4 +58,4 @@ Before researching or redesigning, render the screen and name its three biggest 
 
 ## When to stop
 
-Not at "better than before". Stop when, side by side with the strongest reference, your result reads at least as well, and the template test passes.
+Not at "fewer signs than before". Stop when the result beats the original side by side, and when, side by side with the strongest reference, your result reads at least as well, and the template test passes.

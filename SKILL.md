@@ -2,7 +2,7 @@
 name: unslop-anything
 description: Use when something looks or reads AI-generated and the user wants it fixed or audited. Covers web pages, landing pages, dashboards, mobile app screens, visual design (posters, social graphics, slides, icons, generated images) and writing (posts, docs, emails, UI copy). Triggers on "unslop", "deslop", "looks vibecoded", "looks like AI", "make it less generic", "is this AI slop", purple gradients, glows, emoji icons, gradient text, uneven spacing, hype copy, em dashes, "not X, it's Y" sentences.
 metadata:
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # Unslop Anything
@@ -74,7 +74,7 @@ Then name the surface's mode, because it sets how much expression fits:
    - **None** (0%): say so plainly. Offer two or three refinements with exact values and apply them only if the user agrees. Never change good work just to make it different.
 4. **Direction (heavy UI and visual design only).** Follow `references/direction.md`: product sentence, character, world, moments, signature, and for new looks three candidate directions before committing to one. Show the audit and the direction, then stop and wait for the user's answer, because changing direction later means redoing everything. Skip the wait only when the user already said "just do it"; then still put the three candidates (one line each) and why you chose one in the report.
 5. **Fix in passes.** UI: the pass order in `references/ui-passes.md`. Visual design: the order in `references/visual-design.md`. Writing: the workflow in `references/writing.md`. Finish one pass across the whole piece before starting the next.
-6. **Verify.** Render again (at most three renders per run) and look at the render at full size, region by region: colliding columns, clipped or overlapping text and misaligned edges only show there. Check against the audit list and the checklist of the reference you used. Run the scanner again. Anything still on the list gets fixed or explicitly justified. The target in fix mode is a slop level of 10% or less, with no builder fingerprints left; if you stop above that, say what blocks it (usually a decision or an asset only the user has).
+6. **Verify.** Render again (at most three renders per run) and look at the render at full size, region by region: colliding columns, clipped or overlapping text and misaligned edges only show there. Check against the audit list and the checklist of the reference you used. Run the scanner again. Anything still on the list gets fixed or explicitly justified. Then put the original and the result side by side at the same size and ask which one a visitor would rather use; if it is the original, go back to the direction. The target in fix mode is a slop level of 10% or less, with no builder fingerprints left; if you stop above that, say what blocks it (usually a decision or an asset only the user has).
    For a public site, an independent scorer gives a second opinion before and after: the free Slop Score at antiwebslop.com checks design, copy and builder fingerprints on the rendered page. Lighthouse measures speed and accessibility, not whether a page looks generic.
 7. **Report.** Slop level before and after, the direction, a few lines per pass about what changed, false positives you dropped, anything you could not check (`Not checked:`), and claims you need the user to confirm.
 
@@ -84,6 +84,7 @@ Then name the surface's mode, because it sets how much expression fits:
 - **Mock data only replaces placeholders.** When the original shows placeholder values (`$123,456`, `Lorem`, `John Doe`, a fake chart), you may replace them with plausible mock values. List every mock value in the report under `Mock data to replace`. Real data is never changed.
 - **Never invent.** No new features, stats, testimonials, sources, logos or quotes. Claims like "Trusted by 10,000+ teams" or "10x faster" get confirmed by the user or removed. List them in the report.
 - **Removed decoration is not replaced with new decoration.** Swapping purple gradients for glassmorphism, grain, neon, bento grids or 3D glass icons is the same slop in a new trend.
+- **Better, not just quieter.** Before the first pass, write down what the original does well: its energy, a color people remember, a product you can see, a density that fits. Keep those. Unslopping replaces defaults with decisions and keeps the personality. If someone shown both versions would pick the original, the result has failed, however few signs it has left.
 - **Quiet is not faint.** Stripping all color until nothing reads is a failure too. Color stays where it carries meaning: the primary action, a selection, a status, a data series, the one moment.
 - **Color and labels tell the truth.** A label matches its number ("64% recovery" is not "Excellent" unless the scale says so). Red means a problem. Green means good.
 - **Work through the design system.** If the project has theme tokens or CSS variables, change their values or how they are used; never bypass them with hard-coded values.
@@ -97,6 +98,7 @@ Then name the surface's mode, because it sets how much expression fits:
 |---|---|
 | "It looks clean now" | Clean is the template. Run the template test: swap in a competitor's name. If it still fits, push the direction. |
 | "The user just wants it prettier" | Prettier and different are not the same. Ten pretty AI apps side by side are one app. |
+| "Fewer signs means better" | A page with zero signs that people like less than the original is a failed fix. Compare both side by side. |
 | "Removing color fixes it" | Removing color without a ramp, an accent and meaning gives a grey template. |
 | "The scanner found nothing" | Zero hits means zero greppable signs. Hierarchy, rhythm and meaning still need your eyes. |
 | "I'll skip the render, the code is right" | Slop lives in what people see. Clipped text, uneven gaps and weak hierarchy only show when rendered. |
