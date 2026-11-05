@@ -27,7 +27,7 @@ SKIP_DIRS = {"node_modules", ".git", "dist", "build", ".next", "out", "coverage"
 HYPE = (r"supercharg\w*|seamless\w*|unlock\w*|revolutioni[sz]\w*|game[- ]?chang\w*|effortless\w*|magic(?:al)?|AI[- ]powered|"
         r"next[- ]gen\w*|cutting[- ]edge|potenci[aá] tu\w*|potenci[ae]\s+(?:su|seu|sua)\w*|revolucion[aá]\w*|sin esfuerzo|"
         r"impulsad[oa] por IA|potenciad[oa] por IA|alavanc\w*|sem esfor[cç]o|movid[oa] a IA|world[- ]class|enterprise[- ]grade|"
-        r"empower\w*|streamlin\w*")
+        r"empower\w*|streamlin\w*|desbloque\w*|el poder de|the power of|sin fricci[oó]n|sem atrito")
 
 EMOJI = r"[\U0001F300-\U0001FAFF☀-➿⭐⭕✨]"
 HUES = r"(?:purple|violet|indigo|fuchsia|pink|blue|cyan|sky|teal|emerald|rose|orange|amber)"
@@ -42,6 +42,14 @@ def is_cream(hexcode: str) -> bool:
     """A warm off-white page color: the default "tasteful" surface."""
     r, g, b = (int(hexcode[i:i + 2], 16) for i in (0, 2, 4))
     return r >= 235 and g >= 222 and b >= 195 and r >= g >= b and 10 <= r - b <= 45
+
+
+def faint_grey(hexcode: str) -> bool:
+    """A light, nearly neutral grey: unreadable as text on a light page."""
+    if len(hexcode) == 3:
+        hexcode = "".join(c * 2 for c in hexcode)
+    rgb = [int(hexcode[i:i + 2], 16) for i in (0, 2, 4)]
+    return max(rgb) - min(rgb) <= 16 and 0xB8 <= min(rgb) and max(rgb) <= 0xDD
 
 
 def overshoots(args: str) -> bool:
@@ -104,7 +112,7 @@ UI_RULES = [
          "colored glow or shadow: remove; depth from surface steps and hairlines"),
     Rule("radial-glow", "color", r"radial-gradient\(([^;{}\n]*)",
          "colored glow or spotlight fading to transparent: a solid surface, or a lit material from the world",
-         keep=lambda m: chromatic_stops(m.group(1)) >= 1 and re.search(r"transparent|,\s*0\)|/\s*0\)", m.group(1)) is not None),
+         keep=lambda m: chromatic_stops(m.group(1)) >= 1 and re.search(r"transparent|,\s*0\)|/\s*0\)|#0000(?:00)?\b", m.group(1)) is not None),
     Rule("cream-background", "color", r"(?:background(?:-color)?:\s*|bg-\[)#([0-9a-fA-F]{6})\b",
          "cream page background, the default tasteful surface: keep only if the direction chose it",
          keep=lambda m: is_cream(m.group(1))),
@@ -136,7 +144,7 @@ UI_RULES = [
     Rule("off-grid-css", "spacing", r"\b(?:margin|padding|gap|row-gap|column-gap)(?:-(?:top|right|bottom|left|inline|block))?:\s*([^;}\n]+)",
          "off-grid spacing: use a 4px step", keep=lambda m: any(off_grid(n) for n in re.findall(r"(\d+)px", m.group(1)))),
     # 5. Copy
-    Rule("greeting", "copy", r"(?:Welcome back|Good (?:morning|afternoon|evening)|Hey|Hi|Hello|Morning|Bienvenid[oa] de nuevo|Hola|Bem-vind[oa] de volta|Ol[áa])\s*,?\s+\{?[\w.$]+\}?\s*!",
+    Rule("greeting", "copy", r"(?:Welcome back|Good (?:morning|afternoon|evening)|Hey|Hi|Hello|Morning|Bienvenid[oa] de nuevo|Hola|Buen(?:os|as) (?:d[ií]as|tardes|noches)|Bem-vind[oa] de volta|Ol[áa]|Bom dia|Boa (?:tarde|noite))\s*,?\s+\{?[\w.$]+\}?\s*(?:!|👋|<)",
          "greeting headline: title the context (page or period) instead"),
     Rule("exclamation", "copy", r">(?:[^<{}\n]|\{[^{}\n]*\})*[A-Za-zÀ-ÿ0-9}](?:[^<{}\n]|\{[^{}\n]*\})*!+\s*<|!!(?=\s*[\"'`<)\n]|\s*$)",
          "exclamation in interface text: plain statement"),
@@ -144,19 +152,19 @@ UI_RULES = [
          "wordy placeholder: one word like Search"),
     Rule("hype-ui", "copy", rf"\b(?:{HYPE})\b",
          "hype word: say what it does"),
-    Rule("unverified-claim", "copy", r"\b(?:trusted|loved|used)\s+by\s+[\d,.]+\s*[kKmM+]*|\b(?:m[aá]s de|mais de)\s+[\d,.]+\s*[kKmM]?\+?\s+(?:usuarios|usu[aá]rios|clientes|equipos|equipes|empresas)\b|\b\d+x\s+faster\b|\b[\d,.]+\s*[kKmM]?\+\s+(?:users|teams|customers|companies|clientes|usuarios)\b",
+    Rule("unverified-claim", "copy", r"\b(?:trusted|loved|used)\s+by\s+[\d,.]+\s*[kKmM+]*|\b(?:m[aá]s de|mais de)\s+[\d,.]+\s*[kKmM]?\+?\s+(?:usuarios|usu[aá]rios|clientes|equipos|equipes|empresas|personas|pessoas|miembros|people|members)\b|\b\d+x\s+faster\b|\b[\d,.]+\s*[kKmM]?\+\s+(?:users|teams|customers|companies|clientes|usuarios)\b|\b[45][.,]\d\s*(?:★|/\s*5\b|stars\b|estrellas\b)|★{5}",
          "unverifiable claim: confirm with the user, then make it specific or remove it"),
-    Rule("template-copy", "copy", r"\bEverything you need,? (?:all )?in one place\b|\bThe future of [\w ]{1,25} is here\b|\bWhy choose us\b|\bNo fluff\b|\bLess noise\.? More signal\b|\bto the next level\b|\bNo more [\w ]{1,25} theat(?:er|re)\b|\bOops!? Something went wrong\b|\bFast\. Simple\. Secure\b|\bTodo lo que necesitas,? en un solo lugar\b|\bPor qu[eé] elegirnos\b|\bal siguiente nivel\b|\bTudo o que voc[eê] precisa\b|\bpr[oó]ximo n[ií]vel\b",
+    Rule("template-copy", "copy", r"\bEverything you need,? (?:all )?in one place\b|\bThe future of [\w ]{1,25} is here\b|\bWhy choose us\b|\bNo fluff\b|\bLess noise\.? More signal\b|\bto the next level\b|\bNo more [\w ]{1,25} theat(?:er|re)\b|\bOops!? Something went wrong\b|\bFast\. Simple\. Secure\b|\bTodo lo que necesitas,? en un solo lugar\b|\bPor qu[eé] elegirnos\b|\bal siguiente nivel\b|\bTudo o que voc[eê] precisa\b|\bpr[oó]ximo n[ií]vel\b|\bSin relleno\b|\bMenos ruido\.? M[aá]s se[ñn]al\b|\bEl futuro del? [\w ]{1,25} ya est[aá] aqu[ií]\b|\bR[aá]pido\. Simple\. Seguro\b|\bUps!? Algo sali[oó] mal\b|\bBasta de [\w ]{0,25}teatro\b|\bteatro (?:de|en) (?:las|los) \w+|\b(?:for|para) (?:modern teams|equipos modernos)\b|\bThe AI[- ]powered platform\b|\bLa plataforma (?:con|de) IA\b|\bAre you sure\?|¿Est[aá]s segur[oa]\?|\bNo items yet\b|\bNothing here yet\b|\bNo hay elementos todav[ií]a\b|\bTrusted by (?:leading|top|the best|industry)\b|\bCon la confianza de\b|\bWork smarter\b|\bTrabaja m[aá]s inteligente\b|\bPor qu[eé] elegir\w*",
          "template line: replace with a fact about this product"),
-    Rule("fake-urgency", "copy", r"\bOnly \d+ (?:spots?|seats?|left|remaining)\b|\bEnds in \d|\bUpdated \d+ (?:seconds?|minutes?) ago\b|\b\d[\d,.]* (?:people )?online now\b|\bS[oó]lo quedan \d+\b|\bApenas \d+ vagas\b",
+    Rule("fake-urgency", "copy", r"\bOnly \d+ (?:spots?|seats?|left|remaining)\b|\bEnds in \d|\bUpdated \d+ (?:seconds?|minutes?) ago\b|\b\d[\d,.]* (?:people )?online now\b|\bS[oó]lo quedan \d+\b|\bApenas \d+ vagas\b|\bTermina en \d|\bActualizado hace \d+ (?:segundos?|minutos?)\b|\b\d[\d,.]* (?:personas )?en l[ií]nea\b",
          "urgency or live-ness nobody measured: real values or nothing"),
-    Rule("placeholder-people", "copy", r"\b(?:Sarah Johnson|David Chen|Jane Doe|John Doe|Jane Smith|John Smith|Lorem ipsum)\b",
+    Rule("placeholder-people", "copy", r"\b(?:Sarah Johnson|David Chen|Jane Doe|John Doe|Jane Smith|John Smith|Lorem ipsum|Juan P[eé]rez|Mar[ií]a Gonz[aá]lez|Carlos Mendoza|Jo[aã]o da Silva|Fulano de Tal|Acme S\.A\.)",
          "placeholder person or text: real names from the user, or remove (mock data only replaces placeholders, list it)"),
     Rule("aphorism", "copy", r">\s*(?:Not (?:a|an|just) [^<.]{1,30}\.\s+(?:A|An|It'?s) [^<.]{1,30}\.|[^<.]{1,30}\.\s+(?:No|Just) [^<.]{1,30}\.)\s*<",
          "aphoristic cadence (\"X. No Y.\", \"Not a X. A Y.\"): say plainly what it does", min_count=2),
     Rule("side-border", "components", r"\bborder-[lr]-(?:[2-8]|\[[2-9]px\])(?![\w-])|border-(?:left|right):\s*[2-9]px\s+solid|border-(?:left|right)-width:\s*[2-9]px",
          "colored side border on a card, list item or alert: a subtler accent, or none"),
-    Rule("thin-border-wide-shadow", "components", r"\bborder\b[^\n\"'`]*\bshadow-(?:xl|2xl)\b|\bshadow-(?:xl|2xl)\b[^\n\"'`]*\bborder\b",
+    Rule("thin-border-wide-shadow", "components", r"\bborder\b[^\n\"'`]*\bshadow-(?:xl|2xl)\b|\bshadow-(?:xl|2xl)\b[^\n\"'`]*\bborder\b|border:\s*1px solid[^}]*box-shadow:\s*0\s+(?:[2-9]\d)px\s+(?:[4-9]\d|\d{3})px|box-shadow:\s*0\s+(?:[2-9]\d)px\s+(?:[4-9]\d|\d{3})px[^}]*border:\s*1px solid",
          "hairline border plus wide soft shadow on a row of cards: commit to one, edge or elevation", min_count=3),
     Rule("fake-logos", "components", r"\b(?:Acme(?: Inc| Corp)?|Globex|Initech|Umbrella(?: Corp)?|Hooli|Stark Industries|Wayne Enterprises)\b",
          "made-up customer logos: real customers the user confirms, or nothing", min_count=2),
@@ -176,8 +184,69 @@ UI_RULES = [
     Rule("organic-clip", "visuals", r"clip-path:\s*(?:path\(|polygon\(([^)]*)\))",
          "organic clip-path imitating a cut-out: an alpha matte from the real image, or no mask",
          keep=lambda m: m.group(1) is None or m.group(1).count(",") >= 7),
+    Rule("stock-palette", "color", r"\b(?:bg|text|border|ring|from|to|via)-indigo-(?:500|600)\b|#(?:4f46e5|6366f1|8b5cf6|7c3aed|a3e635|22d3ee|c2410c)\b",
+         "stock Tailwind color as the brand (indigo-600, violet-500, lime-400, cyan-400, orange-700): a color from the product's world, written as tokens"),
+    Rule("cold-greys", "color", r"#(?:f9fafb|f3f4f6|e5e7eb|d1d5db|9ca3af|6b7280|4b5563|374151|1f2937|111827|f8fafc|f1f5f9|e2e8f0|cbd5e1|94a3b8|64748b|475569|334155|1e293b|0f172a)\b|\b(?:bg|text|border|divide|ring)-(?:gray|slate)-\d{2,3}\b",
+         "stock cool greys with no tint as the whole ramp: a neutral ramp tinted toward the product's world", min_count=6),
+    Rule("faint-text", "color", r"\btext-(?:gray|slate|zinc|neutral|stone)-(?:200|300)\b|(?<![\w-])color:\s*#(?:d1d5db|e5e7eb|cbd5e1|d4d4d8|e4e4e7|ccc|ddd|cccccc|dddddd)\b",
+         "grey text so light it fails contrast: 4.5:1 for body, 3:1 for large text; darker, bigger, or cut it"),
+    Rule("impact-font", "type", r"font-family:[^;}\n]*\b(?:Impact|Arial Black|Haettenschweiler)\b|\bfont-\[(?:Impact|Arial_Black)\]",
+         "Impact or Arial Black as the headline face: a display family chosen for the product"),
+    Rule("headline-highlight", "type", r"<h[12]\b[^>]*>[^<]{1,80}<(?:span|em|i|mark|strong)\b[^>]*>[^<]{1,30}</(?:span|em|i|mark|strong)>",
+         "one highlighted, italic or colored word in the headline: let the sentence carry the emphasis"),
+    Rule("mono-costume", "type", r">[^<]*(?:\[\s*[A-Z][A-Z0-9_]{3,}\s*\]|//\s*v\d+\.\d+)[^<]*<",
+         "monospace system-label costume ([ SYSTEM_READY ] // v1.0.4): plain words; mono only for real code and IDs", flags=0),
+    Rule("title-case", "type", r"<h[1-4]\b[^>]*>\s*(?:[A-ZÁÉÍÓÚÑ][a-záéíóúñ']+\s+){3,}[A-ZÁÉÍÓÚÑ][a-záéíóúñ']+",
+         "Title Case On Every Word: sentence case (Spanish and Portuguese never use title case; English only if the style guide asks)", flags=0),
+    Rule("ai-sparkle", "icons", r"<(?:Sparkles?|WandSparkles|Wand2?|MagicWand)\b|\bimport\s*\{[^}]*\b(?:Sparkles?|WandSparkles|Wand2)\b[^}]*\}",
+         "sparkle or wand for \"AI\": a plain icon that explains the action, or none; show what the AI produces"),
+    Rule("lucide-default", "icons", r"from\s+[\"']lucide-(?:react|vue|vue-next|svelte|angular)[\"']|unpkg\.com/lucide|\bdata-lucide=|class=[\"\']lucide\b",
+         "Lucide as shipped (24px, stroke 2) proves nothing alone: if kept, set size and stroke to match the type; or pick a family for the product"),
+    Rule("dead-button", "copy", r"<(?:button|a|Button|Link)\b[^>]*>\s*(?:Get started|Learn more|Submit|Click here|Read more|Empezar|Comenzar|Saber m[aá]s|Ver m[aá]s|Enviar|Haz clic aqu[ií]|Comece agora|Saiba mais)\s*[→›]?\s*</",
+         "button that says nothing: the action the person wants (Book a table, See pricing)"),
+    Rule("generic-benefit", "copy", r">\s*(?:Save time|Grow faster|Do more|No limits|Lightning fast|Secure by default|Ahorra tiempo|Crece r[aá]pido|Haz m[aá]s|Sin l[ií]mites|Rapid[ií]simo|Seguro|Inteligente|Simple|R[aá]pido|Fast|Secure|Smart|Easy|Siempre)\.?\s*<",
+         "benefit that fits any product: a fact only this product can claim", min_count=2),
+    Rule("stacked-without", "copy", r"\b(?:sin|without|sem)\s+[\wáéíóúñ]+,\s*(?:sin|without|sem)\s+[\wáéíóúñ]+",
+         "stacked \"without X, without Y\": name the one thing that is actually gone, with its fact"),
+    Rule("contrast-ui", "copy", r">\s*(?:(?:It'?s )?[Nn]ot (?:a|an|just) [^<.]{1,40}[.,]\s+(?:It'?s |A |An )|No es (?:solo |s[oó]lo )?[^<.]{1,40}[.,]\s+Es |N[ãa]o [ée] [^<.]{1,40}[.,]\s+[ÉE] )",
+         "\"Not X. It's Y.\" framing: say what it is"),
+    Rule("top-border", "components", r"\bborder-t-(?:[3-8]|\[[3-9]px\])(?![\w-])|border-top:\s*[3-9]px\s+solid|border-top-width:\s*[3-9]px",
+         "thick top border on a rounded card: one surface treatment, or none"),
+    Rule("hard-shadow", "components", r"shadow-\[-?\d+px_-?\d+px_0(?:px)?_|box-shadow:\s*-?[2-9]\d?px\s+-?[2-9]\d?px\s+(?:0(?:px)?\s+)?(?:#[0-9a-fA-F]{3,8}\b|black\b|rgb)",
+         "hard offset shadow (template neobrutalism): only if the world is really neobrutalist; else a soft elevation or none"),
+    Rule("spinning-border", "components", r"@property\s+--(?:angle|border-angle|gradient-angle|rotate)\b|conic-gradient\(\s*from\s+var\(--",
+         "rotating gradient border: a static hairline; motion only where it answers an action"),
+    Rule("carousel", "components", r"\b(?:swiper|slick-slider|react-slick|embla|keen-slider|splide|owl-carousel)\b|\bcarousel\b",
+         "carousel (testimonials, features): show the best two or three side by side; carousels hide content"),
+    Rule("spinner", "components", r"<(?:Spinner|Loader2|CircularProgress)\b|\bclass(?:Name)?=[\"'`][^\"'`]*\bspinner\b",
+         "spinner where the shape of the content is known: a skeleton with the final geometry"),
+    Rule("most-popular", "layout", r"\b(?:Most popular|M[aá]s popular|Recomendado|Best value|Mais popular)\b",
+         "middle plan marked \"Most popular\": only if the data says so; else drop the badge"),
+    Rule("zigzag", "layout", r"\b(?:sm|md|lg|xl):flex-row-reverse\b|:nth-child\((?:even|odd|2n)\)[^{]*\{[^}]*flex-direction:\s*row-reverse",
+         "zigzag image/text rows: a structure that follows the content"),
+    Rule("bento", "layout", r"\bbento\b",
+         "bento grid by default: a structure that follows the content"),
+    Rule("blur-blob", "visuals", r"(?<![\w-])blur-(?:2xl|3xl|\[\d{2,}px\])(?![\w-])|(?<![\w-])filter:\s*blur\(\s*(?:[4-9]\d|\d{3,})px",
+         "blurred color blob: remove; a solid surface or an image from the product's world"),
+    Rule("scroll-reveal", "motion", r"\bdata-aos\b|\baos(?:\.min)?\.(?:css|js)\b|\bwhileInView\b|\bfade-?in-?up\b|\bfadeInUp\b|\bfade-up\b|\bslide-up\b|\breveal-on-scroll\b|\bScrollReveal\b|\banimate-(?:fade|slide)-(?:in|up)\w*",
+         "everything fading up on scroll: static; at most one short entrance for the main content"),
+    Rule("count-up", "motion", r"\b(?:react-)?countup(?:\.js)?\b|\bCountUp\b|\buseCountUp\b|\bdata-count(?:-to|up)?=",
+         "numbers counting up: show the final number"),
+    Rule("caps-label", "type", r">\s*[A-ZÁÉÍÓÚÑ]{3,}(?:\s+[A-ZÁÉÍÓÚÑ]{2,}){0,3}\s*<",
+         "3+ uppercase labels in the markup (FEATURES, OUR MISSION): delete the ones that repeat their heading; keep at most one, sentence case", flags=0, min_count=3),
+    Rule("dot-facts", "copy", r">[^<]*\S\s·\s[^<]*\S\s·\s[^<]*<",
+         "facts strung with middle dots (5 min read · Design · 2026): one fact, or a short sentence", min_count=2),
+    Rule("instruction-copy", "copy", r"\bClick (?:the|this|on the) [\w ]{1,25} (?:to|below)\b|\bHaz clic en (?:este|esta|el|la)\b|\b(?:Pulsa|Toca|Presiona) (?:este|esta|el|la) [\w ]{1,20} para\b|\bClique (?:no|neste|na) [\w ]{1,20} para\b",
+         "copy that explains how to use a control: delete; the control explains itself"),
+    Rule("photo-veil", "visuals", r"::?(?:after|before)\s*\{[^}]*background(?:-color)?:\s*(?:rgba\(\s*\d{1,2}\s*,\s*\d{1,2}\s*,\s*\d{1,2}\s*,\s*0?\.[5-9]\d*\)|#[0-3][0-9a-fA-F][0-3][0-9a-fA-F][0-3][0-9a-fA-F][89a-fA-F][0-9a-fA-F])|\b(?:after|before):bg-black/(?:[5-9]0)\b",
+         "dark veil over a photo: show the photo; a scrim only behind text that needs it"),
+    Rule("faint-hex", "color", r"(?<![\w-])color:\s*#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b",
+         "light grey text: on a light surface it fails contrast (4.5:1 body); darker, bigger, or cut it (fine on a dark band)",
+         keep=lambda m: faint_grey(m.group(1))),
+    Rule("faq-accordion", "layout", r"<details\b|\b(?:Accordion(?:Item|Trigger)?|accordion-item)\b",
+         "FAQ accordion in the template lineup: answer the two or three real questions in the page, open", min_count=3),
     # 9. Motion
-    Rule("loop-anim", "motion", r"\banimate-(?:pulse|ping|bounce|spin)\b|animation:[^;]*\binfinite\b",
+    Rule("loop-anim", "motion", r"\banimate-(?:pulse|ping|bounce|spin|float)\b|animation:[^;]*\binfinite\b",
          "looping animation: static, unless it marks something live or loading"),
     Rule("bounce-easing", "motion", r"cubic-bezier\(([^)]*)\)|ease(?:In|Out|InOut)?(?:Bounce|Elastic)\b|\b(?:bounce|elastic)\.(?:out|in)\b|\bbounce:\s*0?\.[3-9]",
          "bounce or overshoot easing: one ease-out curve (quart, quint, expo)",
@@ -188,7 +257,7 @@ UI_RULES = [
          "auto-scrolling row: alone it proves nothing; flag it only next to another motion sign"),
     Rule("transition-all", "motion", r"\btransition-all\b|transition:\s*all\b",
          "transition-all: name the properties (colors, opacity, transform)"),
-    Rule("hover-lift", "motion", r"hover:(?:scale-1\d\d|-?translate-y-[-\d\[]|-translate-y)",
+    Rule("hover-lift", "motion", r"hover:(?:scale-1\d\d|-?translate-y-[-\d\[]|-translate-y)|:hover\s*\{[^}]*transform:\s*(?:translateY\(\s*-|scale\(\s*1\.(?:0[2-9]|[1-9]))",
          "hover lift or scale on cards: color or surface change on hover, tiny scale-down on press"),
     Rule("layout-anim", "motion", r"transition(?:-property)?:\s*[^;]*\b(?:width|height|top|left|margin)\b",
          "animating layout properties: use transform and opacity"),
@@ -197,7 +266,7 @@ UI_RULES = [
          "builder leftover: own domain, renamed tokens with own values, no badge, no CDN, no section comments"),
     Rule("default-title", "fingerprints", r"<title>\s*[a-z0-9]+(?:-[a-z0-9]+)+\s*</title>|<title>\s*(?:Vite \+ React(?: \+ TS)?|React App|Create Next App|Lovable App)\s*</title>",
          "default title: the business name and what the page is", flags=0),
-    Rule("recipe-fingerprint", "fingerprints", r"picsum\.photos|\brounded-\[2(?:\.5)?rem\]|-15px_rgba\(0,\s*0,\s*0,\s*0?\.05\)|\b47\.2%|\(312\) 847-1928",
+    Rule("recipe-fingerprint", "fingerprints", r"picsum\.photos|\$45[,.]231(?:[.,]89)?|\+20[.,]1% from last month|\+180[.,]1%|\+201 since last hour|\brounded-\[2(?:\.5)?rem\]|-15px_rgba\(0,\s*0,\s*0,\s*0?\.05\)|\b47\.2%|\(312\) 847-1928",
          "skill recipe shipped verbatim: a value decided for this product"),
     Rule("placeholder-asset", "fingerprints", r"\b(?:hero-image|feature-\d|testimonial-avatar|placeholder)\.(?:png|jpe?g|svg|webp|avif)\b|\bhref=[\"']#[\"']|<img\b(?![^>]*\bsrc\s*=)[^>]*>|<img\b[^>]*\bsrc=[\"']\s*[\"']",
          "placeholder asset or dead link: real asset or target, or list it in the report"),
@@ -219,6 +288,21 @@ def markup_checks(content: str, name: str) -> list:
             hits.append(Hit(name, line_of(content, m.start()), "skipped-heading", "components",
                             f"h{prev} then h{level}", "heading levels skip: use the next level down"))
         prev = level
+    for m in re.finditer(r">\s*([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]{2,40}?)\s*<(?:/[a-z0-9]+>\s*<)?[^>]*>\s*([^<]{3,80})<", content):
+        label, heading = m.group(1).strip().lower(), m.group(2).strip().lower()
+        if label and heading.startswith(label) and heading != label:
+            hits.append(Hit(name, line_of(content, m.start()), "label-repeats-heading", "type", f"{m.group(1).strip()} / {m.group(2).strip()[:60]}",
+                            "label that repeats its heading: delete the label"))
+    for m in re.finditer(r"<form\b.*?</form>", content, re.IGNORECASE | re.DOTALL):
+        form = m.group(0)
+        fields = re.findall(r"<(?:input|select|textarea|Input|Select|Textarea)\b(?![^>]*type=[\"'](?:hidden|submit|button|checkbox|radio)[\"'])[^>]*>", form)
+        if len(fields) >= 4 and re.search(r"newsletter|subscrib|suscrib|bolet[ií]n|inscrev", form, re.IGNORECASE):
+            hits.append(Hit(name, line_of(content, m.start()), "long-newsletter-form", "components", f"newsletter form with {len(fields)} fields",
+                            "newsletter asks for one field: the email"))
+        required = [f for f in fields if re.search(r"\brequired\b|aria-required=[\"']true", f)]
+        if len(fields) >= 3 and len(required) == len(fields):
+            hits.append(Hit(name, line_of(content, m.start()), "all-required", "components", f"all {len(fields)} fields required",
+                            "every field required: ask only what you need; mark the optional ones"))
     for m in re.finditer(r"<svg\b.*?</svg>", content, re.IGNORECASE | re.DOTALL):
         shapes = len(re.findall(r"<(?:circle|rect|ellipse|polygon|path|line|polyline)\b", m.group(0), re.IGNORECASE))
         if shapes >= 25:
@@ -247,7 +331,7 @@ TEXT_RULES = [
          "inflated word: use the plain word"),
     Rule("opener", "openers", r"(?:here'?s the thing|let me be clear|let'?s dive in|in today'?s (?:fast-paced |digital )?world|in the age of|when it comes to|it'?s worth noting|it'?s important to note|en el mundo actual|hoy en d[ií]a|cabe destacar|es importante destacar|vale ressaltar|most people don'?t know|nobody talks about)",
          "throat-clearing opener: start with the point"),
-    Rule("contrast-frame", "contrast", r"\b(?:it'?s|this is|that'?s)\s+not\s+(?:just\s+|about\s+|only\s+)?[^.!?\n]{1,60}[,;.]\s*(?:it'?s|it is|this is)\b|\bnot (?:just|only) [^.!?\n]{1,50},? but\b|\bno es (?:solo |s[oó]lo )?[^.!?\n]{1,60}[,;.]\s*es\b|\bno solo [^.!?\n]{1,50}sino\b|\bn[ãa]o [ée] (?:s[oó] |apenas )?[^.!?\n]{1,60}[,;.]\s*[ée]\b|\bmais (?:do )?que apenas\b|\bless [^.!?\n]{1,30}, more\b",
+    Rule("contrast-frame", "contrast", r"\b(?:it'?s|this is|that'?s)\s+not\s+(?:just\s+|about\s+|only\s+)?[^.!?\n]{1,60}[,;.]\s*(?:it'?s|it is|this is)\b|\bnot (?:just|only) [^.!?\n]{1,50},? but\b|\bno (?:es|era|son|eran|fue|fueron|se trata de) (?:solo |s[oó]lo )?[^.!?\n]{1,60}[,;.]\s*(?:es|era|son|eran|fue|fueron|se trata de)\b|\bno (?:es|son|era|eran) (?:solo|s[oó]lo|solamente|[uú]nicamente)\b|\bno solo [^.!?\n]{1,50}sino\b|\bit'?s not just\b|\bn[ãa]o [ée] (?:s[oó] |apenas )?[^.!?\n]{1,60}[,;.]\s*[ée]\b|\bmais (?:do )?que apenas\b|\bless [^.!?\n]{1,30}, more\b",
          "contrast framing: state the positive claim directly"),
     Rule("staged-reveal", "reveals", r"(?:what nobody tells you|the part (?:everyone|most people) (?:miss|skip)\w*|what most people get wrong|what if i told you|think about it:|plot twist:|the best part:|here'?s why:|the result\?|the secret\?)",
          "staged reveal: cut the setup and make the claim"),
@@ -265,7 +349,9 @@ TEXT_RULES = [
          "em dash or spaced dash: period, comma, colon or parentheses (none in short copy)", flags=0),
     Rule("emoji-heading", "punctuation", r"^#{1,6}\s.*" + EMOJI + r"|^\s*[-*]\s*" + EMOJI,
          "emoji in heading or bullet: remove", flags=re.MULTILINE),
-    Rule("hype-text", "words", r"\b(?:unlock\w*|this changes everything|this is huge|next[- ]level)\b",
+    Rule("stacked-without", "contrast", r"\b(?:sin|without|sem)\s+[\wáéíóúñ]+,\s*(?:sin|without|sem)\s+[\wáéíóúñ]+",
+         "stacked \"without X, without Y\": name the one thing that is actually gone"),
+    Rule("hype-text", "words", r"\b(?:unlock\w*|this changes everything|this is huge|next[- ]level|desbloque\w*|el poder de|al siguiente nivel|ya est[aá] aqu[ií])\b",
          "hype: say what it does"),
 ]
 
@@ -327,10 +413,11 @@ def scan_text(content: str, rules, name: str) -> list[Hit]:
     hits = []
     for rule in rules:
         rx = rule.compiled()
-        found, seen = [], set()
+        found, seen, total = [], set(), 0
         for m in rx.finditer(content):
             if rule.keep is not None and not rule.keep(m):
                 continue
+            total += 1
             line = content.count("\n", 0, m.start()) + 1
             if line in seen:
                 continue
@@ -339,10 +426,10 @@ def scan_text(content: str, rules, name: str) -> list[Hit]:
             end = content.find("\n", m.end())
             excerpt = content[start: end if end != -1 else len(content)].strip()
             found.append(Hit(name, line, rule.id, rule.category, excerpt[:160], rule.hint))
-        if len(found) >= rule.min_count:
+        if found and total >= rule.min_count:
             if rule.min_count > 1:
                 first = found[0]
-                first.excerpt = f"{len(found)} occurrences, first: {first.excerpt}"
+                first.excerpt = f"{total} occurrences, first: {first.excerpt}"
                 hits.append(first)
             else:
                 hits.extend(found)
@@ -372,6 +459,9 @@ def main(argv=None):
     ap.add_argument("--text", action="store_true", help="apply writing rules to every file")
     ap.add_argument("--json", action="store_true", help="print JSON")
     args = ap.parse_args(argv)
+    for stream in (sys.stdout, sys.stderr):  # Windows consoles (cp1252) cannot print emoji excerpts
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
 
     hits, scanned = scan(args.paths, args.text)
     if scanned == 0:
@@ -380,7 +470,7 @@ def main(argv=None):
 
     categories = sorted({h.category for h in hits})
     if args.json:
-        print(json.dumps({"scanned": scanned, "categories": categories, "hits": [asdict(h) for h in hits]}, ensure_ascii=False, indent=2))
+        print(json.dumps({"scanned": scanned, "categories": categories, "hits": [asdict(h) for h in hits]}, ensure_ascii=True, indent=2))
     else:
         for h in hits:
             print(f"{h.file}:{h.line} [{h.category}/{h.rule}] {h.excerpt}\n    -> {h.hint}")

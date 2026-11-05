@@ -159,6 +159,113 @@ class TextRules(unittest.TestCase):
             self.assertIn("contrast-frame", {h.rule for h in hits}, s)
 
 
+class AntiwebslopCatalog(unittest.TestCase):
+    """One real-code case per pattern of antiwebslop.com/patrones-de-slop that code can show."""
+
+    def ui(self, src, name="x.html"):
+        hits = slop_scan.scan_text(src, slop_scan.UI_RULES, name) + slop_scan.markup_checks(src, name)
+        return {h.rule for h in hits}
+
+    def text(self, src):
+        return {h.rule for h in slop_scan.scan_text(src, slop_scan.TEXT_RULES, "x.md")}
+
+    CASES = [
+        ('<button class="btn">Empezar</button>', "dead-button"),
+        ('<a href="/x">Saber más →</a>', "dead-button"),
+        ('<section data-aos="fade-up">', "scroll-reveal"),
+        ('<motion.div whileInView={{ opacity: 1 }}>', "scroll-reveal"),
+        ('<h2>Desbloquea el poder de tus datos</h2>', "hype-ui"),
+        ('<button class="bg-indigo-600 text-white">', "stock-palette"),
+        ('.hero{background:#09090b;color:#a3e635}', "stock-palette"),
+        ('.card:hover { transform: translateY(-4px); }', "hover-lift"),
+        ('.card{border-radius:16px;border-top:4px solid #8b5cf6}', "top-border"),
+        ('<p>Integra sin fricción, sin esfuerzo, sin complicaciones.</p>', "stacked-without"),
+        ('<h1>La plataforma con IA para equipos modernos</h1>', "template-copy"),
+        ('<h1>Productos que la gente <em>ama</em></h1>', "headline-highlight"),
+        ('<button><Sparkles className="h-4 w-4" /> Generar</button>', "ai-sparkle"),
+        ("import { ArrowRight, Check } from 'lucide-react'", "lucide-default"),
+        ('<p>No es un software. Es un movimiento.</p>', "contrast-ui"),
+        ('<p>Sin relleno. Solo resultados.</p>', "template-copy"),
+        ('<p>Menos ruido. Más señal.</p>', "template-copy"),
+        ('<p>Rápido. Simple. Seguro.</p>', "template-copy"),
+        ('<span>[ SISTEMA_LISTO ] // v1.0.4</span>', "mono-costume"),
+        ('<div class="bento-grid">', "bento"),
+        ('<div class="flex md:flex-row-reverse">', "zigzag"),
+        ('h1{font-family:Impact, sans-serif}', "impact-font"),
+        ('<p>Más de 2.000 personas ya se sumaron</p>', "unverified-claim"),
+        ('<p>4,9★ en 2.000 reseñas</p>', "unverified-claim"),
+        ('<cite>Juan Pérez, CEO de Acme S.A.</cite>', "placeholder-people"),
+        ('<p>¡Ups! Algo salió mal.</p>', "template-copy"),
+        ('<h2>Funciones Potentes Para Equipos Modernos</h2>', "title-case"),
+        ('<h3>¿Estás seguro?</h3>', "template-copy"),
+        ('<h2>¿Por qué elegirnos?</h2>', "template-copy"),
+        ('<div class="swiper testimonials">', "carousel"),
+        ('<span>¡Solo quedan 3 lugares! Termina en 09:59</span>', "fake-urgency"),
+        ('<h1>El futuro del trabajo ya está aquí</h1>', "template-copy"),
+        ('<p>Haz clic en este interruptor para cambiar de modo.</p>', "instruction-copy"),
+        ('<span>Actualizado hace 2 minutos · 1.284 en línea</span>', "fake-urgency"),
+        ('<span>Más popular</span>', "most-popular"),
+        ('<p>No hay elementos todavía.</p>', "template-copy"),
+        ('<h2>Basta de teatro en las reuniones.</h2>', "template-copy"),
+        ('<p class="kpi">$45,231.89</p><p>+20.1% from last month</p>', "recipe-fingerprint"),
+        ('<h1>Buenas tardes, Alex 👋</h1>', "greeting"),
+        ('.btn{border:3px solid #111;box-shadow:6px 6px #111}', "hard-shadow"),
+        ('@property --angle { syntax: "<angle>"; }', "spinning-border"),
+        ('<div class="absolute -z-10 h-72 w-72 rounded-full bg-violet-400 blur-3xl">', "blur-blob"),
+        ('.photo::after{content:"";position:absolute;inset:0;background:#1e1e1ed9}', "photo-veil"),
+        ('.sub{color:#d0d0d0}', "faint-hex"),
+        ('<p class="text-gray-300">Nuestra plataforma ayuda</p>', "faint-text"),
+        ('<Loader2 className="animate-spin" />', "spinner"),
+        ('<CountUp end={10000} />', "count-up"),
+        ('<div class="animate-float">', "loop-anim"),
+        (".card{border:1px solid #ececec;box-shadow:0 30px 60px -10px #00000038}\n" * 3, "thin-border-wide-shadow"),
+        ('.blob{background:radial-gradient(circle at 25% 30%,#c4b5fd 0,#0000 45%)}', "radial-glow"),
+        ('<span class="eyebrow">NUESTRA MISIÓN</span><h2>Nuestra misión es simple</h2>', "label-repeats-heading"),
+        ('<span>FUNCIONES</span><span>PRECIOS</span><span>EQUIPO</span>', "caps-label"),
+        ('<p>5 min de lectura · Diseño · 2026</p><p>Abril · Blog · Notas</p>', "dot-facts"),
+        ('<div class="kbd">Rápido</div><div>Seguro</div><div>Simple</div>', "generic-benefit"),
+        ('<details>a</details><details>b</details><details>c</details>', "faq-accordion"),
+    ]
+
+    def test_every_catalog_case(self):
+        missed = [(src, rule) for src, rule in self.CASES if rule not in self.ui(src)]
+        self.assertEqual(missed, [])
+
+    def test_newsletter_and_required_forms(self):
+        form = '<form>' + ''.join(f'<input name="f{i}" required>' for i in range(6)) + '<button>Suscribirme</button></form>'
+        found = self.ui(form)
+        self.assertIn("long-newsletter-form", found)
+        self.assertIn("all-required", found)
+        ok = '<form><input type="email" name="email" required><button>Suscribirme</button></form>'
+        self.assertEqual(self.ui(ok) & {"long-newsletter-form", "all-required"}, set())
+
+    def test_count_rules_work_on_minified_html(self):
+        one_line = '<a class="rounded-full"></a>' * 6
+        self.assertIn("pill-everything", self.ui(one_line))
+
+    def test_spanish_contrast_in_writing(self):
+        for s in ("Lo peor no era el diseño. Eran los textos.", "No es solo para webs.",
+                  "No se trata de velocidad, se trata de foco."):
+            self.assertIn("contrast-frame", self.text(s), s)
+        self.assertIn("stacked-without", self.text("Sin fricción, sin esfuerzo."))
+
+    def test_false_positives_stay_quiet(self):
+        quiet = [
+            ('<button>Reservar mesa</button>', "dead-button"),
+            ('<h1>Every task has an owner and a date.</h1>', "title-case"),
+            ('<h2>Cómo funciona Taskflow</h2>', "title-case"),
+            ('.card{border-top:1px solid #eee}', "top-border"),
+            ('.btn{box-shadow:0 4px 12px rgba(0,0,0,.1)}', "hard-shadow"),
+            ('.t{color:#57534c}', "faint-hex"),
+            ('<p>Seguro</p>', "generic-benefit"),
+            ('<span>FAQ</span>', "caps-label"),
+            ('<p>Mayo · 2026</p>', "dot-facts"),
+            ('<p>Sin tarjeta de crédito.</p>', "stacked-without"),
+        ]
+        loud = [(src, rule) for src, rule in quiet if rule in self.ui(src)]
+        self.assertEqual(loud, [])
+
+
 class Cli(unittest.TestCase):
     def test_exit_codes(self):
         self.assertEqual(slop_scan.main([str(FIX / "clean.html")]), 0)

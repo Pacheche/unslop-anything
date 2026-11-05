@@ -47,9 +47,10 @@ Often-empty adverbs (keep only when they carry real emphasis or the writer's rhy
 
 ### 3. Contrast and negation framing `[scan]`
 
-- "It's not X, it's Y" / "This isn't about X, it's about Y" / "No es X, es Y" / "Não é X, é Y" → state Y. "The question isn't the model, it's the eval" becomes "The eval matters more than the model."
+- "It's not X, it's Y" / "This isn't about X, it's about Y" / "No es X, es Y" / "Não é X, é Y", and the forms models hide it in: "No es solo para webs", "Lo peor no era X. Eran Y", "No se trata de X, se trata de Y" → state Y. "The question isn't the model, it's the eval" becomes "The eval matters more than the model."
 - "Not just X but Y", "No solo X sino Y", "Mais que apenas" → say Y.
 - Negative listing: "Not a X. Not a Y. A Z." → say Z.
+- Stacked negations: "No friction, no effort, no hassle", "Sin fricción, sin esfuerzo, sin complicaciones" `[scan]` → name the one thing that is really gone, with its fact.
 - Definition by negation ("This is not a teaser.") → delete.
 - Dangling negation (", not to be archived") → delete from the comma.
 - "Less X, more Y" → Y.

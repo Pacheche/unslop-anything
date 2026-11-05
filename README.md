@@ -48,7 +48,7 @@ make these app icons look less generated
 
 ## Scanner
 
-`scripts/slop_scan.py` finds candidate signs in code (HTML, CSS, JSX, TSX, Vue, Svelte) and in text. About 60 rules: color and glow tells, stock fonts and type scale problems, icon tiles, template copy, made-up proof, builder fingerprints (Lovable, v0, Bolt), default metadata, recipes copied from other anti-slop skills, skipped headings, primitive-shape SVG scenes, bounce easing and more. Writing rules cover Markdown and plain text in English, Spanish and Portuguese. Python 3, no dependencies.
+`scripts/slop_scan.py` finds candidate signs in code (HTML, CSS, JSX, TSX, Vue, Svelte) and in text. About 95 rules, covering every pattern of the antiwebslop.com catalog that shows in code: color and glow tells, stock fonts and type scale problems, icon tiles, template copy, made-up proof, builder fingerprints (Lovable, v0, Bolt), default metadata, recipes copied from other anti-slop skills, skipped headings, primitive-shape SVG scenes, bounce easing and more. Writing rules cover Markdown and plain text in English, Spanish and Portuguese. Python 3, no dependencies.
 
 ```bash
 python3 scripts/slop_scan.py src/
