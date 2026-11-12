@@ -1,4 +1,12 @@
-# unslop-anything
+<p align="center">
+  <img src="assets/banner.svg" alt="unslop-anything: your agent finds the AI slop in pages, app screens, images and posts, and fixes it" width="100%">
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-1b1a17?style=flat-square"></a>
+  <img alt="UI, mobile, visuals, writing" src="https://img.shields.io/badge/covers-UI%20%C2%B7%20mobile%20%C2%B7%20visuals%20%C2%B7%20writing-1b1a17?style=flat-square">
+  <img alt="Scanner with about 95 rules" src="https://img.shields.io/badge/scanner-~95%20rules%2C%20no%20dependencies-e4572e?style=flat-square">
+</p>
 
 An agent skill that removes AI slop from anything: web pages, dashboards, landing pages, mobile app screens, images, icons, slides and writing.
 
@@ -32,6 +40,17 @@ unslop the hero of https://example.com
 is this landing page AI slop? don't change anything
 unslop this X thread before I post it
 make these app icons look less generated
+```
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[Route by medium<br/>UI, visual, writing] --> B[Audit with<br/>evidence]
+  B --> C[Rate the slop]
+  C --> D[Set a direction<br/>you approve]
+  D --> E[Fix in passes]
+  E --> F[Render and<br/>verify again]
 ```
 
 ## What it does
