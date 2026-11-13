@@ -110,6 +110,31 @@ class UiRules(unittest.TestCase):
         for snippet in miss:
             self.assertNotIn("translucent-icon", self.ui(snippet), snippet)
 
+    def test_polish_rules(self):
+        self.assertIn("weight-on-hover", self.ui('<a className="hover:font-semibold">Docs</a>'))
+        self.assertIn("weight-on-hover", self.ui("a:hover { color: red; font-weight: 600; }"))
+        self.assertNotIn("weight-on-hover", self.ui("a:hover { color: red; }"))
+        self.assertIn("scale-zero", self.ui(".pop { transform: scale(0); }"))
+        self.assertIn("scale-zero", self.ui("<motion.div initial={{ scale: 0 }} />"))
+        self.assertNotIn("scale-zero", self.ui(".pop { transform: scale(0.95); }"))
+        self.assertNotIn("scale-zero", self.ui("<motion.div initial={{ scale: 0.95 }} />"))
+        self.assertIn("dotted-line", self.ui('<hr className="border-t border-dashed">'))
+        self.assertIn("dotted-line", self.ui(".rule { border-bottom: 1px dotted #ccc; }"))
+        self.assertNotIn("dotted-line", self.ui(".rule { border-bottom: 1px solid #ccc; }"))
+
+    def test_polish_rules_edges(self):
+        self.assertIn("weight-on-hover", self.ui(".tab:focus-visible { font-weight: 600; }"))
+        self.assertIn("weight-on-hover", self.ui('<a className="aria-selected:font-semibold">Docs</a>'))
+        self.assertNotIn("weight-on-hover", self.ui("a:hover { font-weight: inherit; }"))
+        self.assertNotIn("weight-on-hover", self.ui(".x:hover { font-weight: var(--fw); }"))
+        self.assertNotIn("scale-zero", self.ui(":root { --scale: 0; }"))
+        self.assertIn("scale-zero", self.ui(".pop { transform: scale3d(0, 0, 1); }"))
+        self.assertIn("dotted-line", self.ui('<ul className="divide-y divide-dashed">'))
+        self.assertIn("dotted-line", self.ui('<div style={{ borderStyle: "dashed" }} />'))
+        self.assertIn("dotted-line", self.ui(".focus { outline: 1px dashed #999; }"))
+        self.assertNotIn("dotted-line", self.ui(".stub { border-top: 2px dashed #999; }"))
+        self.assertNotIn("dotted-line", self.ui(".frame { border-image: url(dashed.png) 30; }"))
+
     def test_markup_checks(self):
         found = {h.rule for h in slop_scan.markup_checks("<h1>A</h1>\n<h3>B</h3>", "x.html")}
         self.assertIn("skipped-heading", found)

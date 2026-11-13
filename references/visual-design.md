@@ -64,6 +64,45 @@ Rules:
 - Static, or one slow motion that fits the subject. No parallax.
 - Give the image fixed dimensions so the layout does not jump.
 
+## Hero images that carry a headline
+
+For a landing hero or poster where a generated picture and the headline share the frame. The weak ones usually fail the same way: an entire product hovering in the middle under flat, shadowless light looks like a product catalogue, no matter how well it is rendered.
+
+- **A single dominant subject** that the frame crops or that sweeps across it. Tiny figures inside a broad landscape fail twice: models garble small faces, hands and crowds, and the composition looks like stock.
+- **Lighting with a name,** stated in the prompt together with where it lands. Leave it unstated and the model returns soft, uniform light.
+
+| Setup | Where it fits | Result |
+|---|---|---|
+| A pair of colored gels from opposite sides | portraits, shiny products, tech | shape modelled by color; the brighter gel becomes the accent |
+| Sun shafts cutting through haze | wellness, hotels, handmade goods | the subject inside the beams, which carry the accent |
+| Direct flash from the camera | fashion, food, drinks, splashes | motion frozen, a hard shadow, believable skin |
+| Only the product's own light | devices that glow or make sound | a dark scene lit by the subject, its glow shaped into something that crosses the frame rather than a halo around a centered object |
+| A single spotlight on a black stage | dance, theatre, concerts | the performer lit and everything else falling away |
+| Light passing through the accent material | glass, liquid, fabric, petals | the accent lit from within |
+| Midday sun with crisp shadows | outdoors, sport, travel | saturated sky, sharp shadows, sparkle on snow or water |
+
+- **A real surface behind the subject,** taken from the brand's world rather than a flat digital fill: limewash, handmade paper or linen for wellness and handmade goods; brushed metal, frosted glass or matte ceramic for hardware; enamel, glazed tiles or waxed paper for food; a paper backdrop sweeping into the floor with a shadow, or velvet, for fashion; sandstone, rubber or snow for sport; plaster or halftone print for culture.
+- **Accent by measurement** (OKLCH). Two base colors, a dark one and a light one, separated by at least 0.4 in lightness, typically one clearly colored and one close to neutral. The accent is the most saturated color present: medium lightness, at or above 80% of the maximum chroma its hue allows at that lightness (around 0.2 for most hues, around 0.15 for greens and teals), and 120-180° of hue away from both base colors (never under 75°; anything below 0.04 chroma is treated as neutral). Warm accents on cool fields stand out most. It should fill 15-30% of the frame and live on the subject itself (its light, its paint, its material) before reaching the headline; a hairline or a small patch of accent leaves the image dull. The one exception: when a single strong light floods the scene and that light is the accent, it can share the field's hue family provided it is at least 1.8 times as saturated and 0.3 lighter.
+- **The subject and the headline interact.** A luminous subject throws its light on the letters; a sweeping one (fabric, a cable) crosses in front of some letters and behind others; a remarkable material bleeds into a word; a static subject keeps clear of a large headline. Letters placed behind the subject keep the even spacing they would have without it, and the subject covers one letter at most, never its defining stroke (an L missing its base becomes an I). If the model splits the word around the subject, delete the headline from the image, mask out the subject, typeset the words in a real font underneath and layer the subject back over them.
+- **The typeface follows the category:** a light, high-contrast serif for calm and luxury; a broad, heavy sans in two colors for devices; a bold grotesk in sentence case with its final word in the accent for software and studios; one giant condensed word for food, drinks and festivals; a tall condensed italic serif divided by the subject for fashion and culture; an accent-colored script word above a serif for audio, scent and beauty.
+- **People** get one of the lighting setups, visible skin texture (pores, fine hair), grain and slight blooming on the hottest highlights. Poreless skin under flat light gives a render away first.
+- **Products that usually look like catalogue shots** (watches, coffee, sneakers, fragrance): either crop very tight and let the accent form a shape that crosses the frame, or move the product into an unexpected setting. Fragrance surrounded by petals is what every fragrance ad already does.
+- **Supporting type carries facts:** a wordmark, three to five navigation links, a single button and no more than three short captions stating a date, a spec, a price or a location. No slogans tucked into corners.
+- **In a set of images,** no single layout covers more than half of them, and six or more images use at least four layouts; "copy on the left, subject on the right" and "giant word with the subject in front" are the model's defaults. Vary the button too (a round badge, a text link, an outline pill), and give one page only a wordmark and a single link.
+- **Variants of one image** change one thing each (the crop, the moment, the camera height, how far the subject sweeps), so the user chooses between close neighbors instead of unrelated ideas.
+
+Reject a render when it has: a tiny figure in a broad scene; a complete product hovering with even margins under flat light; a product glowing alone in empty darkness; poreless skin; a flat digital background; fire, lava or lightning used as ornament; distorted proportions; smudged dials, screens or fine print; an accent that is small, pale or too close in hue to stand out as the brightest element; a letter hidden or overlapped in the wrong place; slogans in the captions; a clever metaphor that obscures what is actually being sold.
+
+## Code treatments for an image
+
+To make a generated image belong to the page, on the main visual only and only when it fits the character:
+
+- **Glyphs:** redraw the image as a grid of characters picked by brightness, taken from the product's material (`. : 1 7 4 0 $ %` for finance, `{ } < > = #` for code, letters of a word for reading). Cells of 6-10px in the interface's monospace, colored from the image or the ramp.
+- **Halftone dots** sized by brightness, in one ink on the page color, for editorial and print characters.
+- **Dithering** into two or three ramp colors, computed once on load, for retro, technical or playful characters.
+- **Duotone:** brightness mapped onto the darkest surface and the accent; the simplest way to pull any image into the palette (`feColorMatrix`, or a greyscale image under a `mix-blend-mode: color` layer).
+- Performance: read the pixels once on load, never inside the animation loop; prepare glyph atlases ahead of time; animate at 8-12 steps per second, changing a few cells per step; pause off screen; cap the canvas at 2x device pixel ratio.
+
 ## Logos and app icons
 
 - A logo that is an emoji, a sparkle in a gradient tile, a glossy orb or a gradient wordmark is slop. Redraw it flat: the wordmark in the chosen type, or one simple glyph from the product's idea, in one solid color.

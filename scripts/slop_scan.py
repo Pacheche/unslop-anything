@@ -222,6 +222,19 @@ UI_RULES = [
          "icon strokes in a translucent ink darken where they cross (onion skin): one opaque color, a lighter opaque grey, "
          "or opacity on the whole icon",
          keep=lambda m: translucent_ink(m.group(0))),
+    Rule("weight-on-hover", "motion",
+         r"\b(?:hover|focus|aria-selected|aria-current|data-\[[^\]]+\]):font-(?:medium|semibold|bold|extrabold|black)\b"
+         r"|(?::hover|:focus(?:-visible)?|:checked|\[aria-selected[^\]]*\]|\[aria-current[^\]]*\])[^{]*\{[^}]*\bfont(?:-weight)?:(?!\s*(?:inherit|unset|initial|var\())",
+         "text turning bolder on hover or selection reflows the line: change color instead"),
+    Rule("scale-zero", "motion", r"\bscale\(0\)|\bscale3d\(0\s*,|(?<![\w-])scale:\s*0(?![.\d])|\bscale-0\b",
+         "growing from scale 0: start at 0.95-0.97 with opacity 0; real objects always have a shape"),
+    Rule("dotted-line", "components",
+         r"(?:\b(?:border|divide|outline)-(?:[trblxy]-)?(?:dotted|dashed)\b"
+         r"|\b(?:border|outline)(?:-(?:top|right|bottom|left))?(?:-style)?:\s*(?:\d[\w.]*\s+)?(?:dotted|dashed)\b"
+         r"|borderStyle:\s*[\"'](?:dotted|dashed))",
+         "dotted or dashed lines as decoration: one thin solid line or nothing; keep dashes that mean something (a perforation, a projection)",
+         keep=lambda m: not re.search(r"stub|ticket|perforat|tear|coupon|receipt|projection|forecast",
+                                     m.string[m.string.rfind(chr(10), 0, m.start()) + 1:m.start()], re.I)),
     Rule("lucide-default", "icons", r"from\s+[\"']lucide-(?:react|vue|vue-next|svelte|angular)[\"']|unpkg\.com/lucide|\bdata-lucide=|class=[\"\']lucide\b",
          "Lucide as shipped (24px, stroke 2) proves nothing alone: if kept, set size and stroke to match the type; or pick a family for the product"),
     Rule("dead-button", "copy", r"<(?:button|a|Button|Link)\b[^>]*>\s*(?:Get started|Learn more|Submit|Click here|Read more|Empezar|Comenzar|Saber m[aá]s|Ver m[aá]s|Enviar|Haz clic aqu[ií]|Comece agora|Saiba mais)\s*[→›]?\s*</",

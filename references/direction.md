@@ -25,6 +25,51 @@ For a new look, find a visual concept the product can be built around, then deri
 
 The concept must make the product feel like its own world. "Attractive" and "different" are not the same thing: ten polished AI apps side by side are one app.
 
+Put the concept in a single sentence you can hold each later choice against, and give it two tests:
+
+- **Walk it forward.** Empty, busy, finished: if the idea vanishes after the opening frame, it was a poster.
+- **Make it exclude something.** A concept invented to defend a choice already made rules nothing out. It has to forbid at least one move you would otherwise make.
+
+## When the product is not named
+
+Ask. If asking is not possible, or you were told to proceed: for a mock or demo, pick one concrete, believable product that matches the features shown and write the direction for it, labelled `Product (assumed):` so the user can correct it. Do not build the world from some incidental word in the copy, and do not fall back on generic SaaS: the palette, type and accent need a specific world to come from. For a real product you know nothing about, stay neutral, assert nothing, and list the facts you would need.
+
+## The moment
+
+Two shortcuts look designed in a screenshot and say nothing: a flat drawing of an object from the product's field, or an oversized word sitting above a standard form. Before settling, sketch one idea in each of these five families, a sentence apiece:
+
+1. **Behavior:** an interaction no other product would have. At rest it can look ordinary.
+2. **Real content:** the product's actual data or output, given the care usually spent on decoration.
+3. **Proportion:** the one thing that matters gets most of the screen; the rest gets out of its way.
+4. **Type:** a single dramatic size jump, one oversized figure, or one sentence filling the screen, as long as it means something (the figure answers the question, the sentence updates with the state). Huge "Log in" letters mean nothing.
+5. **A surface or object,** under the rules below.
+
+Keep the idea that survives two checks. Described aloud without its styling, it still sounds like an idea: "big serif headline" fails, "the invoice total fills the page and every settled line strikes itself out" passes. And its resting state is already a finished composition from this product's world, since most visitors never get past it. Build the second state as well; a concept that was only drawn has not been tried.
+
+### Fields and objects
+
+Whether a field or object may carry the moment depends on how long people look at the screen:
+
+- **Long or daily use** (an app, a dashboard, settings, an active chat): keep surfaces neutral and let content be the moment.
+- **A brief passage** (sign-in, an empty state, a confirmation, a hero): a field or object can stay when someone who never heard the concept could explain why it is there; when it uses no more than three hues, all from the world; when it has depth, light and a point of focus (a soft two-color wash does not count); when the controls on top remain calm and readable; and when, at the size people see it, it could not pass for clip art or a template-gallery background (layered flat hills, a gradient sunset, a dashed path). After two failed tries, switch to another family of moment.
+
+A gradient can stay as a material when it is the brand's or the brief's, or a shift within one hue family, has a reason in the world, uses the chosen palette and keeps the controls on top quiet. As ornament it goes.
+
+Texture is never required. Add one layer at most, and only to solve a problem you can name:
+
+| Layer | Earns it | Wrong when |
+|---|---|---|
+| Fine grain or stipple | A gradient shows banding or looks too digital; tactile, warm worlds | Spread over a plain fill because it is fashionable |
+| Halftone | Gives structure to soft, photographic color | It competes with the copy |
+| Contour lines | Maps, routes, terrain, data | Strong enough to become wallpaper |
+| Rings around a point | There is one object to emanate from | No object sits at the center |
+| Ribbed glass | A crisp, contrasty subject sits behind it | Nothing behind it, so it is just stripes |
+| Pixel or reaction-diffusion patterns | Publishing, heritage and bold brands | A plain product interface, where it looks like a filter |
+
+- **A material must justify itself.** Frost only works over something worth seeing through; a refraction needs a subject to distort, and text passing through stays whole. Chrome, liquid metal and glossy 3D in the abstract are defaults; they qualify only when the object means something to this product. A mark that performs a job (a lighthouse beam that sweeps during a backup) is worth more than one that gleams.
+- **An object you borrow keeps its physics.** Paper is never faded in, the pins of a lock move the way pins move, and nobody writes a reply on the letter they just received.
+- **Illustrations and characters belong to the page:** its colors, its ink, a single stroke weight, no heavy black fills or cartoon glove hands. One that looks like a sticker or emoji gets redrawn or dropped.
+
 ## Three directions before one
 
 When there is no existing brand to follow, write three distinct directions (five lines each, different worlds or concepts), compare them against the product sentence, then continue with one. Show them to the user when you stop for confirmation. Committing to the first idea is the most common source of sameness.

@@ -60,7 +60,7 @@ flowchart LR
 - **Rates the slop.** Ten categories per medium, 10% each. Heavy slop gets the full process, light slop gets polish only, clean work is left alone.
 - **Sets a direction first.** Product, character, world, moments and one signature detail, derived from your product, never from trends. For new looks it compares three directions before committing, and waits for your OK.
 - **Fixes what weighs most first.** On landing pages: the headline, something real at the top, then the metadata and builder leftovers that automated scores punish most.
-- **Fixes in passes.** UI: spacing, color, icons, copy, type, layout, details, visuals, motion, metadata. Writing: voice-preserving minimum edits.
+- **Fixes in passes.** UI: subtract first, then spacing, color, icons, copy, type, layout, details, visuals, motion, metadata. Writing: voice-preserving minimum edits.
 - **Owns its values.** A type and spacing scale derived from your text, fonts chosen with a reason, decisions saved in `DESIGN.md` so the next prompt does not drift back. It never ships a skill's example values, its own included.
 - **Verifies.** Renders again, re-scans, runs the checklist and the template test: if a competitor's name fits your screen or your post, it is not done.
 - **Never invents.** No new features, numbers, testimonials or sources. Unverifiable claims go back to you.
@@ -84,7 +84,8 @@ It reports candidates, not verdicts. Zero hits does not mean zero slop: hierarch
 SKILL.md                         entry point and routing
 references/ui-signs.md           UI signs in ten categories, with fixes and false positives
 references/ui-passes.md          the passes, spacing to metadata, with starting values and a checklist
-references/direction.md          how to decide what the product should look like
+references/direction.md          how to decide what the product should look like, and its one rich moment
+references/polish.md             details, motion decisions and frame-by-frame checks for designed screens
 references/mobile.md             iOS and Android specifics
 references/component-vocabulary.md  precise names for overlays and controls
 references/visual-design.md      images, illustrations, icons, slides, logos, prompt recipe

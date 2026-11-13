@@ -56,6 +56,8 @@ One sign proves nothing. Careful sites use a small uppercase label or a dot back
 - A check mark before every list item, an arrow after every link, or the arrow in its own circle flush against the button edge → plain items and labels; one arrow where it means "go".
 - Arrow glyphs in text (`View all →`, `Next ➜`) `[scan]` → a library chevron icon, or plain text.
 - Icons nudged off the column → same icon box width in every row, fixed gap to the label.
+- Third-party logos (Google, Apple, Stripe, a bank) turned grey or recolored to the accent → their real colors; people recognize a known mark by color before they read it.
+- An icon whose final state only makes sense while it animates → redraw it so the resting glyph reads on its own at the size it is displayed.
 
 ## 4. Spacing and alignment
 
@@ -97,6 +99,8 @@ One sign proves nothing. Careful sites use a small uppercase label or a dot back
 - A caption narrating what comes next ("Here are your stats") → delete.
 - The same verb repeated on every item ("Add X", "Add Y", "Add Z") → keep it once or drop it.
 - Labels that disagree with data or state ("Delete selected" with zero selected; "Excellent" on a mediocre score) → the label follows the state and the scale.
+- A short line straining to sound charming or human ("Bluer, if you like.") → the plain fact it stands for.
+- Metadata that repeats what is already on screen, or a subtitle strung together with separators (`Tue, Thu 6:30 · Sat 7:00 · No conflicts`) → cut the repeat; one readable phrase.
 
 For longer copy (hero text, feature blurbs, emails inside the product), also run `references/writing.md`.
 
@@ -120,6 +124,10 @@ For longer copy (hero text, feature blurbs, emails inside the product), also run
 - Untouched shadcn/ui or component-library defaults: stock theme colors, the same radius on every corner, stock shadows → change the theme tokens (colors, radius, shadows), not each component.
 - The template dashboard: shadcn's example cards with their example numbers (`$45,231.89`, `+20.1% from last month`, `+2,350`, `+12,234`), a bar chart and "Recent sales" `[scan]` → the user's real metrics, the one that matters first, each with its reference.
 - Dividers between everything → space groups things; lines only in dense tables and lists.
+- Dotted or dashed lines, dividers and chart paths as decoration `[scan: borders only]` → one thin solid line, or nothing. Keep dashes that carry meaning: a real perforation (a ticket stub, a tear-off), a projected value in a chart, a reply or acknowledgement in a flow diagram.
+- A field and a resting button with the same fill, side by side → the field stays the brightest surface; the waiting button sits a step darker until it is ready.
+- Success and error marks in stock green and red that ignore the page's palette → hues taken from the palette or shifted toward it, keeping the meaning a status needs.
+- A control floating next to what it acts on (a clear button beside a search box) → part of that element's states.
 - Charts with rainbow bars inside one series, glowing or pill-shaped bars, uppercase day labels → one series color, muted grid, quiet labels, one highlight on the value that matters.
 - Sparklines, mini bars and icons added to every stat card → label, number, change with its reference.
 - Equal cards side by side with the same layout → one lead element, smaller supporting ones, varied widths.
@@ -176,6 +184,9 @@ For making or fixing the images themselves, use `references/visual-design.md`.
 - Everything fading up on scroll `[scan]`, numbers counting up `[scan]`, things floating for no reason `[scan]`, a blinking cursor in the headline, a spinning gradient border, logos scrolling forever → static; motion only where it answers something the visitor did.
 - Animating width, height, top, left, margin or large blurs → transform and opacity.
 - Abrupt slider or carousel cuts; popups whose close animation glitches → a short crossfade; test every open and close.
+- Text that turns bold on hover or selection `[scan]` → change color; a weight change reflows the line.
+- Things that grow in from `scale(0)` `[scan]` → start near full size (0.95-0.97) with opacity 0; real objects always have a shape.
+- Bouncing dots or generic wave loaders → a calm skeleton of the real layout, timed steps, or an optimistic update.
 
 ## 10. Template look and fingerprints
 

@@ -180,7 +180,7 @@ A bento grid by default is a costume (`ui-signs.md`); a grid that has been plann
 7. **Shared frame, varied contents:** one radius, gap and padding for all tiles; the gap equals the inner padding or a clear fraction of it.
 8. **Nothing repeats** from tile to tile: no string, avatar or chrome appears twice.
 9. **Grounds work as a set:** one shared surface with a single photo, accent or inverted tile as punctuation, or several grounds whose lightness and temperature form a rhythm.
-10. **One tile leads the motion.** Supporting tiles do one small thing once as the grid enters (staggered 80-120ms in reading order) or on hover; only the lead tile may run a short story.
+10. **One tile leads the motion.** Supporting tiles do one small thing once as the grid enters (staggered as `polish.md` sets for grid tiles) or on hover; only the lead tile may run a short story.
 11. **Each tile at 1:1, recomposed when narrow.** Never scale the grid down as one picture. Important text stays at 10px or more in a 320px column.
 
 Tile kinds: a single component; the lead UI; a stat; a statement; an object (payment card, chip, keycap) with one light source and a believable material; a diagram (grid, heatmap, nodes and lines) in one stroke weight; a collection (logos, file tiles) running off an edge; a real, licensed photo. A scene drawn in SVG or CSS never stands in for a photograph. For five tiles, a typical mix: the lead screen, a component or two, a figure or a sentence, and a non-UI piece (object, diagram or collection).
@@ -215,7 +215,7 @@ Each annotation clarifies a single link, such as the meaning of a data point or 
 
 - Calm, on two curves: travel `cubic-bezier(0.45, 0, 0.1, 1)`; entrances from nothing `cubic-bezier(0.25, 0.8, 0.25, 1)` over 0.8-1 s. On a phone, quicker and native: `cubic-bezier(0.3, 0.75, 0.1, 1)` over 0.5 s.
 - Interface feedback stays as fast as in the real product; only the storytelling slows down.
-- Related responses overlap, but a confirmation still comes after its cause. Groups stagger 40-80ms in reading order.
+- Related responses overlap, but a confirmation still comes after its cause. Groups stagger in reading order with the values in `polish.md`.
 - Cards and text do not bounce; a small expressive icon may overshoot on its own. Arrivals slow down over their last third.
 - A color change between distant hues takes about 200ms.
 

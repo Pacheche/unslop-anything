@@ -2,7 +2,7 @@
 
 Fix in this order. Finish a pass across the whole screen before the next one. When almost every line changes, plan all passes and write the new screen in one go, as long as each pass is applied.
 
-Why this order: spacing first, because everything reads differently once the rhythm is right. Color and icons next, because they are the loudest slop. Copy before type and layout, because the length of a headline decides its size and where it sits. Visuals and motion last, because they must fit a screen that already works without them.
+Why this order: subtract first, because every piece removed is one less to restyle. Then spacing, because everything reads differently once the rhythm is right. Color and icons next, because they are the loudest slop. Copy before type and layout, because the length of a headline decides its size and where it sits. Visuals and motion last, because they must fit a screen that already works without them.
 
 The values below are starting points for deriving your own, not answers. A fixed recipe applied to every project becomes the next fingerprint (the double-bezel card and Satoshi spread exactly that way). Derive each value from this product's text, world and brand, and write down why.
 
@@ -16,7 +16,22 @@ Recoloring a page that says nothing still leaves a page that says nothing. On a 
 2. **Something real at the top.** A screenshot of the product, a photo of the place, the person or the object. If there is nothing yet, good text alone beats an image nobody chose.
 3. **Metadata and leftovers.** Pass 10 below. It is the cheapest fix and the one that weighs most in automated scores.
 
-Then run passes 1-9. Within them, the three-card section, made-up proof and decorative motion are the next biggest wins.
+Then run passes 0-9. Within them, the three-card section, made-up proof and decorative motion are the next biggest wins.
+
+## 0. Subtract
+
+Generated screens have too much, and every extra piece competes. Before restyling anything, go over each icon, line, badge, caption, wrapper and sentence and ask what would break without it. If the answer is nothing, it goes; "it adds interest" or "it fills the space" are the reasons a model added it, so they do not count. Go over the screen twice, because each deletion reveals the next. The signature detail from the direction is the only exemption. Information people need (a price, a password rule) is moved, made smaller or turned into the moment, never lost.
+
+What to cut first:
+
+- Dividers that spacing already does. Keep rules only where they help the eye follow a row across a table or ledger.
+- A subtitle that repeats the title with different words.
+- Wrappers inside wrappers. A map, photo or chart that is itself the content goes edge to edge in its container.
+- Two devices doing one job: a step counter beside a progress bar, a toast for a change already visible, an icon next to a label that says the same. Keep the better one; the job still gets done.
+- A control parked beside the thing it acts on (a clear button next to a search box, a send button floating by a field): fold it into that element's states.
+- Chrome the moment does not need yet, like Share on something with nothing to share.
+
+Then run the passes on what is left.
 
 ## 1. Spacing
 
@@ -131,9 +146,10 @@ Neutral ramp in OKLCH (pick a hue `h` from the world: warm 60-80, ink/blue 250-2
 
 - Remove loops without a reason, bounces, hover lifts and scale on cards, `transition-all`, parallax.
 - Keep motion that explains: hover is a quick color or surface change, press is a 0.97-0.98 scale, menus fade and rise 4-8px from their origin, changed numbers tween.
-- One curve, for example `cubic-bezier(0.2, 0.8, 0.2, 1)`, and a few durations: feedback 120-180ms, menus and popovers 160-220ms, entrances and sheets 280-450ms, exits about 0.7x the entrance. Stagger 40-60ms, at most six items.
+- Durations, curves and stagger come from `polish.md` (Durations and curves), which is the single source for these values; exits run 20-30% shorter than entrances.
 - Only transform and opacity. Respect `prefers-reduced-motion` with a crossfade.
 - Ask how often people will see it: hundreds of times a day gets near-instant; occasional moments may be richer.
+- To tune what remains (interruption, replacements, frame-by-frame checks), use `polish.md`.
 
 ## 10. Metadata and leftovers
 
