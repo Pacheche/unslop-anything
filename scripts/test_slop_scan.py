@@ -90,6 +90,26 @@ class UiRules(unittest.TestCase):
         self.assertIn("tiny-text", self.ui(".meta { font-size: 10px; }"))
         self.assertNotIn("tiny-text", self.ui(".meta { font-size: 12px; }"))
 
+    def test_translucent_icon(self):
+        hit = [
+            '<path stroke="rgba(0,0,0,0.4)" d="M1 1h14"/>',
+            '<path stroke-opacity="0.5" d="M1 1h14"/>',
+            '<circle fill-opacity="0.4" r="4"/>',
+            '<path stroke="rgb(0 0 0 / 40%)" d="M1 1h14"/>',
+            '<path fill="#00000066" d="M1 1h14"/>',
+        ]
+        miss = [
+            '<path stroke="#8a8a8a" d="M1 1h14"/>',
+            '<path stroke-opacity="1" d="M1 1h14"/>',
+            '<path stroke-opacity="0.99" d="M1 1h14"/>',
+            '<rect fill="rgba(0,0,0,0.04)" width="9" height="9"/>',
+            '<svg opacity=".4"><path stroke="#555" d="M1 1h14"/></svg>',
+        ]
+        for snippet in hit:
+            self.assertIn("translucent-icon", self.ui(snippet), snippet)
+        for snippet in miss:
+            self.assertNotIn("translucent-icon", self.ui(snippet), snippet)
+
     def test_markup_checks(self):
         found = {h.rule for h in slop_scan.markup_checks("<h1>A</h1>\n<h3>B</h3>", "x.html")}
         self.assertIn("skipped-heading", found)

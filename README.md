@@ -4,11 +4,11 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-1b1a17?style=flat-square"></a>
-  <img alt="UI, mobile, visuals, writing" src="https://img.shields.io/badge/covers-UI%20%C2%B7%20mobile%20%C2%B7%20visuals%20%C2%B7%20writing-1b1a17?style=flat-square">
+  <img alt="UI, mobile, visuals, demos, writing" src="https://img.shields.io/badge/covers-UI%20%C2%B7%20mobile%20%C2%B7%20visuals%20%C2%B7%20demos%20%C2%B7%20writing-1b1a17?style=flat-square">
   <img alt="Scanner with about 95 rules" src="https://img.shields.io/badge/scanner-~95%20rules%2C%20no%20dependencies-e4572e?style=flat-square">
 </p>
 
-An agent skill that removes AI slop from anything: web pages, dashboards, landing pages, mobile app screens, images, icons, slides and writing.
+An agent skill that removes AI slop from anything: web pages, dashboards, landing pages, mobile app screens, product illustrations and demos, images, icons, slides and writing.
 
 Install it and tell your agent "unslop this". The skill makes the agent find every sign of slop, rate how bad it is, set a direction that belongs to your product, fix the work pass by pass and check the result on a real render. The agent does the work. You only answer what the material cannot tell it.
 
@@ -55,7 +55,7 @@ flowchart LR
 
 ## What it does
 
-- **Routes by medium.** UI (web and mobile), visual design or writing. The agent loads only the rules it needs.
+- **Routes by medium.** UI (web and mobile), visual design, product illustrations and demos, or writing. The agent loads only the rules it needs.
 - **Audits with evidence.** Every sign comes with where it lives and its fix: a file and line, a screen region or a quoted sentence.
 - **Rates the slop.** Ten categories per medium, 10% each. Heavy slop gets the full process, light slop gets polish only, clean work is left alone.
 - **Sets a direction first.** Product, character, world, moments and one signature detail, derived from your product, never from trends. For new looks it compares three directions before committing, and waits for your OK.
@@ -88,6 +88,7 @@ references/direction.md          how to decide what the product should look like
 references/mobile.md             iOS and Android specifics
 references/component-vocabulary.md  precise names for overlays and controls
 references/visual-design.md      images, illustrations, icons, slides, logos, prompt recipe
+references/product-illustrations.md  faux product UI: framing, restraint, bento grids, demo motion, review
 references/writing.md            writing signs and the voice-preserving edit
 scripts/slop_scan.py             candidate finder for code and text
 ```

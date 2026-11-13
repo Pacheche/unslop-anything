@@ -85,6 +85,24 @@ def chromatic_stops(args: str) -> int:
     return count
 
 
+def translucent_ink(tag: str) -> bool:
+    """An SVG shape whose stroke or fill is partly transparent (alpha between 0.05 and 0.95)."""
+    alphas = []
+    for kind in ("stroke", "fill"):
+        m = re.search(kind + r"""\s*[=:]\s*["']?\s*(?:rgba|hsla)\([^)]*?[,/]\s*([\d.]+)(%?)\s*\)""", tag)
+        if not m:
+            m = re.search(kind + r"""\s*[=:]\s*["']?\s*(?:rgb|hsl)\([^)]*/\s*([\d.]+)(%?)\s*\)""", tag)
+        if m:
+            alphas.append(float(m.group(1)) / (100 if m.group(2) else 1))
+        m = re.search(kind + r"""\s*[=:]\s*["']?\s*#[0-9a-fA-F]{6}([0-9a-fA-F]{2})\b""", tag)
+        if m:
+            alphas.append(int(m.group(1), 16) / 255)
+        m = re.search(kind + r"""-opacity\s*[=:]\s*["']?\s*([\d.]+)""", tag)
+        if m:
+            alphas.append(float(m.group(1)))
+    return any(0.05 <= a <= 0.95 for a in alphas)
+
+
 @dataclass
 class Rule:
     id: str
@@ -200,6 +218,10 @@ UI_RULES = [
          "Title Case On Every Word: sentence case (Spanish and Portuguese never use title case; English only if the style guide asks)", flags=0),
     Rule("ai-sparkle", "icons", r"<(?:Sparkles?|WandSparkles|Wand2?|MagicWand)\b|\bimport\s*\{[^}]*\b(?:Sparkles?|WandSparkles|Wand2)\b[^}]*\}",
          "sparkle or wand for \"AI\": a plain icon that explains the action, or none; show what the AI produces"),
+    Rule("translucent-icon", "icons", r"<(?:path|line|polyline|polygon|circle|ellipse)\b[^>]*>",
+         "icon strokes in a translucent ink darken where they cross (onion skin): one opaque color, a lighter opaque grey, "
+         "or opacity on the whole icon",
+         keep=lambda m: translucent_ink(m.group(0))),
     Rule("lucide-default", "icons", r"from\s+[\"']lucide-(?:react|vue|vue-next|svelte|angular)[\"']|unpkg\.com/lucide|\bdata-lucide=|class=[\"\']lucide\b",
          "Lucide as shipped (24px, stroke 2) proves nothing alone: if kept, set size and stroke to match the type; or pick a family for the product"),
     Rule("dead-button", "copy", r"<(?:button|a|Button|Link)\b[^>]*>\s*(?:Get started|Learn more|Submit|Click here|Read more|Empezar|Comenzar|Saber m[aá]s|Ver m[aá]s|Enviar|Haz clic aqu[ií]|Comece agora|Saiba mais)\s*[→›]?\s*</",

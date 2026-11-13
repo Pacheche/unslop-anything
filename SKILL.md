@@ -1,8 +1,8 @@
 ---
 name: unslop-anything
-description: Use when something looks or reads AI-generated and the user wants it fixed or audited. Covers web pages, landing pages, dashboards, mobile app screens, visual design (posters, social graphics, slides, icons, generated images) and writing (posts, docs, emails, UI copy). Triggers on "unslop", "deslop", "looks vibecoded", "looks like AI", "make it less generic", "is this AI slop", purple gradients, glows, emoji icons, gradient text, uneven spacing, hype copy, em dashes, "not X, it's Y" sentences.
+description: Use when something looks or reads AI-generated and the user wants it fixed or audited. Covers web pages, landing pages, dashboards, mobile app screens, visual design (posters, social graphics, slides, icons, generated images), faux product UI (hero and feature-card shots, bento grids, animated product demos with a cursor) and writing (posts, docs, emails, UI copy). Triggers on "unslop", "deslop", "looks vibecoded", "looks like AI", "make it less generic", "is this AI slop", purple gradients, glows, emoji icons, gradient text, uneven spacing, hype copy, em dashes, "not X, it's Y" sentences.
 metadata:
-  version: "0.2.2"
+  version: "0.3.0"
 ---
 
 # Unslop Anything
@@ -27,6 +27,7 @@ Paths are relative to this skill's folder. Load references on demand, never all 
 | Web app, dashboard, landing page, any HTML/CSS/React/Vue/Svelte UI | `references/ui-signs.md`, `references/ui-passes.md`, `references/direction.md` |
 | Mobile app screen (iOS, Android, React Native, Flutter, SwiftUI) | the UI files above plus `references/mobile.md` |
 | Image, illustration, icon set, poster, social graphic, slide, logo | `references/visual-design.md`, `references/direction.md` |
+| Faux product UI: a hero or feature-card shot, a bento grid, an animated product demo or cursor walkthrough | `references/product-illustrations.md`, `references/direction.md` |
 | Writing: post, thread, article, email, docs, README, UI copy | `references/writing.md` |
 | A UI whose copy is also slop | do the UI first, then the copy pass with `references/writing.md` |
 
@@ -40,7 +41,7 @@ Then name the surface's mode, because it sets how much expression fits:
    When the user asks for a specific overlay or component and the name is vague ("make a popup"), check `references/component-vocabulary.md` before building.
 
 2. **Pick the job.**
-   - **Detect.** The user asks "is this slop?", wants an audit, or says not to change anything. Load only the signs file for the medium (`ui-signs.md`, `visual-design.md` or `writing.md`). Do not edit. Answer in this shape:
+   - **Detect.** The user asks "is this slop?", wants an audit, or says not to change anything. Load only the signs file for the medium (`ui-signs.md`, `visual-design.md`, `product-illustrations.md` or `writing.md`). Do not edit. Answer in this shape:
      ```text
      Slop level: N% (heavy | light | none)
      <Category>
@@ -72,8 +73,8 @@ Then name the surface's mode, because it sets how much expression fits:
    - **Heavy** (50% or more): full process, direction first.
    - **Light** (10-40%): polish mode. Fix only what the audit found. Keep the palette, type, layout, voice and brand. Bigger ideas go in the report as suggestions.
    - **None** (0%): say so plainly. Offer two or three refinements with exact values and apply them only if the user agrees. Never change good work just to make it different.
-4. **Direction (heavy UI and visual design only).** Follow `references/direction.md`: product sentence, character, world, moments, signature, and for new looks three candidate directions before committing to one. Show the audit and the direction, then stop and wait for the user's answer, because changing direction later means redoing everything. Skip the wait only when the user already said "just do it"; then still put the three candidates (one line each) and why you chose one in the report.
-5. **Fix in passes.** UI: the pass order in `references/ui-passes.md`. Visual design: the order in `references/visual-design.md`. Writing: the workflow in `references/writing.md`. Finish one pass across the whole piece before starting the next.
+4. **Direction (heavy UI, visual design and product illustrations only).** Follow `references/direction.md`: product sentence, character, world, moments, signature, and for new looks three candidate directions before committing to one. Show the audit and the direction, then stop and wait for the user's answer, because changing direction later means redoing everything. Skip the wait only when the user already said "just do it"; then still put the three candidates (one line each) and why you chose one in the report.
+5. **Fix in passes.** UI: the pass order in `references/ui-passes.md`. Visual design: the order in `references/visual-design.md`. Product illustrations: plan, look, framing, screen, motion, then the review in `references/product-illustrations.md`. Writing: the workflow in `references/writing.md`. Finish one pass across the whole piece before starting the next.
 6. **Verify.** Render again (at most three renders per run) and look at the render at full size, region by region: colliding columns, clipped or overlapping text and misaligned edges only show there. Check against the audit list and the checklist of the reference you used. Run the scanner again. Anything still on the list gets fixed or explicitly justified. Then put the original and the result side by side at the same size and ask which one a visitor would rather use; if it is the original, go back to the direction. The target in fix mode is a slop level of 10% or less, with no builder fingerprints left; if you stop above that, say what blocks it (usually a decision or an asset only the user has).
    For a public site, an independent scorer gives a second opinion before and after: the free Slop Score at antiwebslop.com checks design, copy and builder fingerprints on the rendered page. Lighthouse measures speed and accessibility, not whether a page looks generic.
 7. **Report.** Slop level before and after, the direction, a few lines per pass about what changed, false positives you dropped, anything you could not check (`Not checked:`), and claims you need the user to confirm.
