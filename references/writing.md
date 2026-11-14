@@ -55,7 +55,7 @@ Often-empty adverbs (keep only when they carry real emphasis or the writer's rhy
 - Dangling negation (", not to be archived") → delete from the comma.
 - "Less X, more Y" → Y.
 
-### 4. Fake insight and staged reveals `[scan: colon reveal]`
+### 4. Fake insight and staged reveals `[scan: staged-reveal]`
 
 - "Here's what nobody tells you", "The part everyone misses", "What most people get wrong" → cut the setup; the claim stands alone.
 - Colon reveals: "The best part: it learns." → "It learns, which is the best part" or just the fact.

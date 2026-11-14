@@ -135,6 +135,16 @@ class UiRules(unittest.TestCase):
         self.assertNotIn("dotted-line", self.ui(".stub { border-top: 2px dashed #999; }"))
         self.assertNotIn("dotted-line", self.ui(".frame { border-image: url(dashed.png) 30; }"))
 
+    def test_audit_fixes(self):
+        tracked = "".join(f"<style>.k{i}{{text-transform:uppercase;letter-spacing:0.2em}}</style>" for i in range(3))
+        self.assertIn("tracked-caps", self.ui(tracked))
+        self.assertIn("headline-highlight", self.ui("<h1><em>Build</em> better apps</h1>"))
+        self.assertIn("bento", self.ui('<div class="bento grid"></div>'))
+        self.assertNotIn("bento", self.ui("<p>Our bento box menu</p>"))
+        self.assertIn("builder-fingerprint", self.ui('<meta name="generator" content="v0.dev">'))
+        self.assertNotIn("caps-label", self.ui("<td>USD</td><td>EUR</td><td>GBP</td>"))
+        self.assertIn("caps-label", self.ui("<p>FEATURES</p><p>ABOUT</p><p>PRICING</p>"))
+
     def test_markup_checks(self):
         found = {h.rule for h in slop_scan.markup_checks("<h1>A</h1>\n<h3>B</h3>", "x.html")}
         self.assertIn("skipped-heading", found)
@@ -197,6 +207,12 @@ class TextRules(unittest.TestCase):
     def test_spanish_fragments(self):
         hits = slop_scan.scan_text("Así de fácil. Él lo sabe. Ésa es. Ágil. Fin.", slop_scan.TEXT_RULES, "x.md")
         self.assertIn("fragments", {h.rule for h in hits})
+
+    def test_exclaimed_fragments_and_numeric_ranges(self):
+        rules = lambda s: {h.rule for h in slop_scan.scan_text(s, slop_scan.TEXT_RULES, "x.md")}
+        self.assertIn("fragments", rules("¡Simple! ¡Rápido! ¡Listo! Ya está."))
+        self.assertNotIn("em-dash", rules("It takes 10 - 20 minutes."))
+        self.assertIn("em-dash", rules("Fast - and cheap."))
 
     def test_spanish_and_portuguese_contrast(self):
         for s in ("No es una app, es una experiencia.", "Não é um app, é uma experiência."):

@@ -2,7 +2,7 @@
 name: unslop-anything
 description: Use when something looks or reads AI-generated and the user wants it fixed or audited. Covers web pages, landing pages, dashboards, mobile app screens, visual design (posters, social graphics, slides, icons, generated images), faux product UI (hero and feature-card shots, bento grids, animated product demos with a cursor) and writing (posts, docs, emails, UI copy). Triggers on "unslop", "deslop", "looks vibecoded", "looks like AI", "make it less generic", "is this AI slop", purple gradients, glows, emoji icons, gradient text, uneven spacing, hype copy, em dashes, "not X, it's Y" sentences.
 metadata:
-  version: "0.4.0"
+  version: "0.4.1"
 ---
 
 # Unslop Anything
