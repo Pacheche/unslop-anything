@@ -36,6 +36,9 @@ If your agent does not load skills, open this folder and ask it to follow `SKILL
 
 ```text
 /unslop-anything this dashboard
+/unslop-anything clean up only this dashboard's copy and charts
+/unslop-anything src/pages/dashboard.tsx --surface
+audit legacy web patterns in this project
 unslop the hero of https://example.com
 is this landing page AI slop? don't change anything
 unslop this X thread before I post it
@@ -61,6 +64,8 @@ flowchart LR
 - **Sets a direction first.** Product, character, world, moments and one signature detail, derived from your product, never from trends. For new looks it compares three directions before committing, and waits for your OK.
 - **Fixes what weighs most first.** On landing pages: the headline, something real at the top, then the metadata and builder leftovers that automated scores punish most.
 - **Fixes in passes.** UI: subtract first, then spacing, color, icons, copy, type, layout, details, visuals, motion, metadata. Writing: voice-preserving minimum edits.
+- **Cleans interface copy and charts in place.** Audits real state, labels, chart scaffolding and redundant text. A scoped cleanup preserves the layout and style. Ask for surface polish to include spacing, weight, gradients and motion.
+- **Consults modern web platform guidance.** Looks up a relevant guide before changing browser behavior. Includes a local guide catalog and Manifest V3 references for Chrome extensions. Broad legacy scanning is available on request.
 - **Owns its values.** A type and spacing scale derived from your text, fonts chosen with a reason, decisions saved in `DESIGN.md` so the next prompt does not drift back. It never ships a skill's example values, its own included.
 - **Verifies.** Renders again, re-scans, runs the checklist and the template test: if a competitor's name fits your screen or your post, it is not done.
 - **Never invents.** No new features, numbers, testimonials or sources. Unverifiable claims go back to you.
@@ -84,6 +89,9 @@ It reports candidates, not verdicts. Zero hits does not mean zero slop: hierarch
 SKILL.md                         entry point and routing
 references/ui-signs.md           UI signs in ten categories, with fixes and false positives
 references/ui-passes.md          the passes, spacing to metadata, with starting values and a checklist
+references/ui-cleanup.md         subtractive UI copy, decoration and chart workflow
+references/web-guidance.md       modern web patterns, browser support and extension guidance
+references/upstream/             guide snapshots, examples, counters and license notices
 references/direction.md          how to decide what the product should look like, and its one rich moment
 references/polish.md             details, motion decisions and frame-by-frame checks for designed screens
 references/mobile.md             iOS and Android specifics
@@ -96,4 +104,4 @@ scripts/slop_scan.py             candidate finder for code and text
 
 ## License
 
-MIT
+Unslop Anything is MIT. The bundled upstream materials retain their licenses. See [upstream sources and licenses](references/upstream/README.md).

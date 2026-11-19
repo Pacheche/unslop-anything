@@ -1,8 +1,8 @@
 ---
 name: unslop-anything
-description: Use when something looks or reads AI-generated and the user wants it fixed or audited. Covers web pages, landing pages, dashboards, mobile app screens, visual design (posters, social graphics, slides, icons, generated images), faux product UI (hero and feature-card shots, bento grids, animated product demos with a cursor) and writing (posts, docs, emails, UI copy). Triggers on "unslop", "deslop", "looks vibecoded", "looks like AI", "make it less generic", "is this AI slop", purple gradients, glows, emoji icons, gradient text, uneven spacing, hype copy, em dashes, "not X, it's Y" sentences.
+description: Audit or fix AI-generated-looking UI, visual design and writing. Use for unslop, deslop or cleanup requests on landing pages, dashboards, charts, app screens, UI copy, posters, slides, icons, product illustrations, animated demos, posts, docs and emails. Includes targeted browser implementation guidance and explicit legacy web audits or modernization.
 metadata:
-  version: "0.4.1"
+  version: "0.5.0"
 ---
 
 # Unslop Anything
@@ -29,7 +29,8 @@ Paths are relative to this skill's folder. Load references on demand, never all 
 | Image, illustration, icon set, poster, social graphic, slide, logo | `references/visual-design.md`, `references/direction.md` |
 | Faux product UI: a hero or feature-card shot, a bento grid, an animated product demo or cursor walkthrough | `references/product-illustrations.md`, `references/direction.md` |
 | Writing: post, thread, article, email, docs, README, UI copy | `references/writing.md` |
-| A UI whose copy is also slop | do the UI first, then the copy pass with `references/writing.md` |
+| UI copy, decorative chrome, charts or dashboards | `references/ui-cleanup.md`; use its U1–U20 pass within the scope below |
+| Web UI with HTML/CSS/client-side behavior to change, web modernization or a Chrome extension | `references/web-guidance.md`; consult it before choosing an implementation |
 
 Then name the surface's mode, because it sets how much expression fits:
    - **Persuade** (landing, marketing, pricing): the visitor decides. Full commitment to a direction, real imagery, a strong headline.
@@ -41,7 +42,7 @@ Then name the surface's mode, because it sets how much expression fits:
    When the user asks for a specific overlay or component and the name is vague ("make a popup"), check `references/component-vocabulary.md` before building.
 
 2. **Pick the job.**
-   - **Detect.** The user asks "is this slop?", wants an audit, or says not to change anything. Load only the signs file for the medium (`ui-signs.md`, `visual-design.md`, `product-illustrations.md` or `writing.md`). Do not edit. Answer in this shape:
+   - **Detect.** The user asks "is this slop?", wants an audit, or says not to change anything. Load the signs for the medium and any targeted UI or web reference needed to verify the reported issues. Do not edit. Answer in this shape:
      ```text
      Slop level: N% (heavy | light | none)
      <Category>
@@ -50,7 +51,9 @@ Then name the surface's mode, because it sets how much expression fits:
      Not checked: <what you could not see, or none>
      Want me to fix it?
      ```
-   - **Fix (default).** Run the workflow below.
+   - **UI cleanup.** For a request limited to interface copy, decoration or charts, use the subtractive workflow in `references/ui-cleanup.md`. A targeted surface polish request (or `--surface`) includes U17–U20. An explicit request to redesign uses the full UI workflow instead.
+   - **Web modernization.** For an explicit broad modernization or legacy audit, use the separate scan and verification workflow in `references/web-guidance.md`. A named screen or component gets targeted guidance.
+   - **Fix (default).** Run the workflow below for other requests.
 
 3. **Get the material in front of you.**
    - Code: find the files that render the screen. If you can run it, render it and take a screenshot. Judge what people see, not only the code.
@@ -69,6 +72,7 @@ Then name the surface's mode, because it sets how much expression fits:
    On Windows use `py` instead of `python3`. It needs only Python 3. Exit 0 means no candidates, 1 candidates, 2 nothing scanned.
    Scan only the target: the screen's files and the shared components and styles it uses, not the whole repo, unless the user asked for a repo-wide audit. For a repo-wide audit, use `--json` and group hits by rule before reading them. Confirm each hit by reading it. Drop false positives and say why in the report.
 2. **Audit.** Walk the signs file for the medium. One line per sign: what, where (`file:line`, screen region or quoted sentence), fix. Add signs the scanner cannot see: hierarchy, rhythm, composition, meaning.
+   For UI, use U1–U16 where relevant during subtraction and copy review, and U17–U20 during authorized surface work. Count each finding under one of the existing slop categories for the overall rating. For changes to web platform behavior, consult the matching guide before editing and verify its applicable fallback.
 3. **Rate it.** Count the categories of the signs file (not the scanner's categories) that have at least one sign. File each sign under one category only, the first one that lists it. That count times 10 is the slop level. In UI, the last category counts for builder fingerprints always, and for template-look signs only when the other nine are empty. Then pick the mode:
    - **Heavy** (50% or more): full process, direction first.
    - **Light** (10-40%): polish mode, with `references/polish.md`. Fix only what the audit found. Keep the palette, type, layout, voice and brand. Bigger ideas go in the report as suggestions.
@@ -107,3 +111,5 @@ Then name the surface's mode, because it sets how much expression fits:
 ## Template test (run last, every time)
 
 Replace the product name, or the writer's name, with a competitor's. If the screen, image or text still fits without edits, it is not done. Push the direction harder in the copy, the visual moment and the signature detail.
+
+For a scoped cleanup or audit, use this as a diagnostic. Keep any broader direction work within the user's requested scope.
