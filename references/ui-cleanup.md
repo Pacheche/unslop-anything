@@ -2,6 +2,8 @@
 
 Use this pass for interface copy, decorative chrome, charts, and dashboards. Keep the target to the files or components the user named. If none are named, use the relevant files changed in the conversation. Ask for a target when neither identifies a surface.
 
+Read the existing brand or `DESIGN.md` rules if present. When the project already has `.unslop-ui/taste.md`, apply its **Bans** and **Keep** lists as UI-specific settings within those rules and the user's scope. Preserve named exceptions and report why. The counter's three supported bans are exclamation marks, uppercase text and middle dots between items. Other bans and Keep exceptions require review. Run from the project root or pass `--taste <file>`. Use the [example format](upstream/unslop-ui/references/taste-example.md) when asked to persist UI-specific choices. Keep project-wide decisions in the canonical brand or design file.
+
 Read the [U1–U20 rules and review checklist](upstream/unslop-ui/guide.md). The original invocation instructions are for the upstream package. Within Unslop Anything, use our writing pass for full sentences and the [bundled numbered writing rules](upstream/unslop-ui/references/unslop-fallback.md) for the UI-specific exceptions. Labels, tabs, table headers and KPI captions can be fragments. A dash that stands for an empty value or marks a range can stay. The optional [upstream loader](upstream/unslop-ui/scripts/load_unslop.py) can read a separately installed pstack ruleset when the user wants to apply that version.
 
 1. Count candidates before editing with the bundled counter:

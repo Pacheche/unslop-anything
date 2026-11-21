@@ -72,6 +72,8 @@ flowchart LR
 
 ## Scanner
 
+UI cleanup also supports project-specific Bans and Keep rules. For selected work, see [editorial direction](references/editorial-direction.md), [interactive motion audit](references/motion-audit.md) and [frontend diff review](references/frontend-diff-review.md).
+
 `scripts/slop_scan.py` finds candidate signs in code (HTML, CSS, JSX, TSX, Vue, Svelte) and in text. About 95 rules, covering every pattern of the antiwebslop.com catalog that shows in code: color and glow tells, stock fonts and type scale problems, icon tiles, template copy, made-up proof, builder fingerprints (Lovable, v0, Bolt), default metadata, recipes copied from other anti-slop skills, skipped headings, primitive-shape SVG scenes, bounce easing and more. Writing rules cover Markdown and plain text in English, Spanish and Portuguese. Python 3, no dependencies.
 
 ```bash

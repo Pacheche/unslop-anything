@@ -2,7 +2,7 @@
 name: unslop-anything
 description: Audit or fix AI-generated-looking UI, visual design and writing. Use for unslop, deslop or cleanup requests on landing pages, dashboards, charts, app screens, UI copy, posters, slides, icons, product illustrations, animated demos, posts, docs and emails. Includes targeted browser implementation guidance and explicit legacy web audits or modernization.
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
 ---
 
 # Unslop Anything
@@ -25,6 +25,9 @@ Paths are relative to this skill's folder. Load references on demand, never all 
 | Medium | Read |
 |---|---|
 | Web app, dashboard, landing page, any HTML/CSS/React/Vue/Svelte UI | `references/ui-signs.md`, `references/ui-passes.md`, `references/direction.md` |
+| Photography-led editorial direction requested | `references/editorial-direction.md` |
+| Excessive, slow or janky interactive motion | `references/motion-audit.md`, `references/polish.md` |
+| Frontend implementation cleanup or review of code changed in this pass | `references/frontend-diff-review.md` |
 | Mobile app screen (iOS, Android, React Native, Flutter, SwiftUI) | the UI files above plus `references/mobile.md` |
 | Image, illustration, icon set, poster, social graphic, slide, logo | `references/visual-design.md`, `references/direction.md` |
 | Faux product UI: a hero or feature-card shot, a bento grid, an animated product demo or cursor walkthrough | `references/product-illustrations.md`, `references/direction.md` |
