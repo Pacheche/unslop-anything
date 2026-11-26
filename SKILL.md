@@ -2,7 +2,7 @@
 name: unslop-anything
 description: Audit or fix AI-generated-looking UI, visual design and writing. Use for unslop, deslop or cleanup requests on landing pages, dashboards, charts, app screens, UI copy, posters, slides, icons, product illustrations, animated demos, posts, docs and emails. Includes targeted browser implementation guidance and explicit legacy web audits or modernization.
 metadata:
-  version: "0.6.0"
+  version: "0.7.0"
 ---
 
 # Unslop Anything
@@ -26,6 +26,8 @@ Paths are relative to this skill's folder. Load references on demand, never all 
 |---|---|
 | Web app, dashboard, landing page, any HTML/CSS/React/Vue/Svelte UI | `references/ui-signs.md`, `references/ui-passes.md`, `references/direction.md` |
 | Photography-led editorial direction requested | `references/editorial-direction.md` |
+| A design reference would help set web direction, or a screenshot is supplied | `references/design-references.md` |
+| Web interface accessibility, usability or behavior audit | `references/web-interface-audit.md`, `references/browser-verification.md` |
 | Excessive, slow or janky interactive motion | `references/motion-audit.md`, `references/polish.md` |
 | Frontend implementation cleanup or review of code changed in this pass | `references/frontend-diff-review.md` |
 | Mobile app screen (iOS, Android, React Native, Flutter, SwiftUI) | the UI files above plus `references/mobile.md` |
@@ -61,7 +63,7 @@ Then name the surface's mode, because it sets how much expression fits:
 3. **Get the material in front of you.**
    - Code: find the files that render the screen. If you can run it, render it and take a screenshot. Judge what people see, not only the code.
    - A URL with no code: open it in a browser tool, screenshot it, and save the HTML as a local copy to work on. The output is a redesigned file the user can hand to whoever owns the site. Say so.
-   - Only a screenshot: rebuild it as one static HTML file that matches closely, treat that as the original, and say so.
+   - Only a screenshot: use `references/design-references.md` to interpret the image. For a design the user owns or has permission to reproduce, a static reconstruction can serve as the comparison baseline. Otherwise use its transferable principles in an original design.
    - No browser or render tool, or the app will not start: extract the screen into a static HTML file and render that if you can; otherwise work from the code and list every visual check under `Not checked:`.
    - Writing: ask for the draft if it is not pasted. If the audience is unclear, ask one question: who reads this and where.
 
@@ -85,6 +87,8 @@ Then name the surface's mode, because it sets how much expression fits:
 6. **Verify.** Render again (at most three renders per run) and look at the render at full size, region by region: colliding columns, clipped or overlapping text and misaligned edges only show there. Check against the audit list and the checklist of the reference you used. For anything that moves, step through the frames as `references/polish.md` describes. Run the scanner again. Anything still on the list gets fixed or explicitly justified. Then put the original and the result side by side at the same size and ask which one a visitor would rather use; if it is the original, go back to the direction. The target in fix mode is a slop level of 10% or less, with no builder fingerprints left; if you stop above that, say what blocks it (usually a decision or an asset only the user has).
    For a public site, an independent scorer gives a second opinion before and after: the free Slop Score at antiwebslop.com checks design, copy and builder fingerprints on the rendered page. Lighthouse measures speed and accessibility, not whether a page looks generic.
 7. **Report.** Slop level before and after, the direction, a few lines per pass about what changed, false positives you dropped, anything you could not check (`Not checked:`), and claims you need the user to confirm.
+
+For web fixes that affect the interface or behavior, use `references/web-interface-audit.md` and `references/browser-verification.md` to review the affected routes and verify them interactively.
 
 ## Rules that do not bend
 

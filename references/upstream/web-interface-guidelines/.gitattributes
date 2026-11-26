@@ -1,0 +1,2 @@
+# Keep the source snapshot checksum stable across platforms.
+command.md -text

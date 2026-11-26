@@ -4,3 +4,5 @@
 - **Modern Web Guidance** ([source at `64a6d708`](https://github.com/GoogleChrome/modern-web-guidance/tree/64a6d708f5a43f2cd3fde5d4d7db3905ba1bdf65), [Apache-2.0 license](modern-web-guidance/LICENSE)). Includes the complete web guide catalog, the Chrome extensions and Chrome Web Store references, and both skill entrypoints as `guide.md`. Search, retrieve and legacy-scan use the published Modern Web Guidance CLI, version 1.0.1.
 
 The [UI cleanup](../ui-cleanup.md) and [web guidance](../web-guidance.md) workflows adapt upstream instructions to Unslop Anything. Upstream guide files are reference material. Unslop Anything is the single installed skill.
+
+- **Vercel Web Interface Guidelines** ([source at `434b7f9`](https://github.com/vercel-labs/web-interface-guidelines/blob/434b7f91364665f2f733b310ec54809bf8f37937/command.md), [MIT license](web-interface-guidelines/LICENSE)). The [bundled command](web-interface-guidelines/command.md) matches the snapshot pinned by Vercel's `web-design-guidelines` skill (SHA-256 `d246b026f4f29b5823a9cc857f9edf3d2507002e055e32040cadeaf3b38e0234`).
